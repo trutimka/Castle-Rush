@@ -37,21 +37,29 @@ public class SpawnerTest : MonoBehaviour
 
     private void Spawn(SpawnPlace spawnPlace)
     {
-        var building = Instantiate(GetRandomBuilding(), spawnPlace.transform.position, Quaternion.identity);
+        var randomRotation = GetRandomRotation();
+        var building = Instantiate(GetRandomBuilding(), spawnPlace.transform.position, randomRotation);
         spawnPlace.ChangeSpawnAllowed(false);
+    }
+
+    private Quaternion GetRandomRotation()
+    {
+        float randomY = Random.Range(0f, 360f);
+
+        return Quaternion.Euler(0f, randomY, 0);
     }
 
     private void MarkNeighboursOccupied(SpawnPlace spawnPlace)
     {
         foreach (var neighbour in spawnPlace.Neighbours)
         {
-            neighbour.ChangeSpawnAllowed(false); 
+            neighbour.ChangeSpawnAllowed(false);
         }
     }
 
     private GameObject GetRandomBuilding()
     {
-        int randomIndex = UnityEngine.Random.Range(0, 3);
+        int randomIndex = Random.Range(0, 3);
 
         if (randomIndex == 0) return _spawnerPrefab;
         if (randomIndex == 1) return _goldFarmPrefab;
