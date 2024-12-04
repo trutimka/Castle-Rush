@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class Building : MonoBehaviour
 {
@@ -7,6 +8,12 @@ public abstract class Building : MonoBehaviour
     protected int Health;
     protected int MaxHealth;
     protected int Level;
+    
+    
+    [SerializeField]
+    protected List<GameObject> spawnPoints;
+    
+    public List<GameObject> SpawnPoints => spawnPoints;
 
     public void Init(int startHealth, int maxHealth, double countGoldPerSecond = 1)
     {
