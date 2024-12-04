@@ -49,12 +49,32 @@ public class LineBetweenBuildings : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 10000, buildingMask))
             {
-                pointB = hit.collider.gameObject;
-                lineRenderer.SetPosition(1, pointB.transform.position);
-                Debug.Log(hit.transform.name);
-                Debug.Log("hit");
-                
-                
+                Vector3 direction = hit.point - pointA.transform.position;
+                float distance = direction.magnitude;
+
+                // Выполняем Raycast
+                if (Physics.Raycast(pointA.transform.position, direction.normalized, out RaycastHit hit2, distance, buildingMask))
+                {
+                    Debug.Log($"На пути найдено здание: {hit.collider.gameObject.name}");
+                    if (hit2.collider.gameObject == hit.collider.gameObject 
+                        || (hit.transform.parent != null && hit.transform.parent.gameObject == hit2.collider.gameObject) 
+                        || (hit2.transform.parent != null && hit2.transform.parent.gameObject == hit.collider.gameObject)
+                        || (hit.transform.parent != null && hit2.transform.parent != null && hit.transform.parent.parent.gameObject == hit2.transform.parent.gameObject))
+                    {
+                        pointB = hit.collider.gameObject;
+                        lineRenderer.SetPosition(1, pointB.transform.position);
+                        Debug.Log(hit.transform.name);
+                        Debug.Log("hit");
+                    }
+                    else
+                    {
+                        lineRenderer.SetPosition(1, pointA.transform.position);
+                    }
+                }
+                else
+                {
+                    lineRenderer.SetPosition(1, pointA.transform.position);
+                }
             } 
             else
             {
