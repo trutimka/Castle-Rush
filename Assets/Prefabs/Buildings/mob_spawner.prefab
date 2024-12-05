@@ -129,7 +129,7 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 2016434176358220271}
   - {fileID: 8732099073363947400}
-  mobPrefab: {fileID: 0}
+  mobPrefab: {fileID: 5851142436804899093, guid: 9423b947e9df24b58be4495298f86f5c, type: 3}
 --- !u!1 &2016434176358220271
 GameObject:
   m_ObjectHideFlags: 0

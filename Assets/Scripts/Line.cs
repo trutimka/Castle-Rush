@@ -29,17 +29,39 @@ public class Line : MonoBehaviour
         lineRenderer.SetPosition(0, pointA.transform.position);
     }
 
-    public void FinishLine(GameObject endPoint)
+    public bool FinishLine(GameObject endPoint)
     {
         var closestPoints = FindClosestExits(pointA, endPoint); // Находим ближайшие выходы
         pointA = closestPoints.Item1; // Перезаписываем pointA
         pointB = closestPoints.Item2; // Перезаписываем pointB
 
+        if (pointA == pointB) return false;
+        
+        var spawner = pointA.GetComponentInParent<MobSpawner>();
+        if (spawner != null)
+        {
+            spawner.Init(); // Убедимся, что спавнер инициализирован
+            var isAdded = spawner.AddTarget(pointB);
+            if (!isAdded) return false;
+            spawner.StartSpawning();
+        }
+
         lineRenderer.SetPosition(0, pointA.transform.position);
         lineRenderer.SetPosition(1, pointB.transform.position);
 
         OnLineCreated?.Invoke();
+        return true;
     }
+
+    public void OnDestroy()
+    {
+        var spawner = pointA.GetComponentInParent<MobSpawner>();
+        if (spawner != null)
+        {
+            spawner.RemoveTarget(pointB);
+        }
+    }
+    
 
     private (GameObject, GameObject) FindClosestExits(GameObject buildingA, GameObject buildingB)
     {

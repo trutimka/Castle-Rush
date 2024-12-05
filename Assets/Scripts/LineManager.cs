@@ -59,7 +59,13 @@ public class LineManager : MonoBehaviour
                     }
                 }
                 var pointB = obj1;
-                currentLine.FinishLine(pointB);
+                var isFinished = currentLine.FinishLine(pointB);
+                if (!isFinished)
+                {
+                    Destroy(currentLine.gameObject);
+                    currentLine = null;
+                    return;
+                }
                 lines.Add(currentLine); // Добавляем в список
                 Debug.Log($"Линия завершена: {currentLine.GetPointA().name} -> {currentLine.GetPointB().name}");
 
