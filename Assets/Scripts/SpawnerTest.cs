@@ -44,8 +44,8 @@ public class SpawnerTest : MonoBehaviour
     private void Spawn(SpawnPlace spawnPlace)
     {
         var randomRotation = GetRandomRotation();
-        
-        var building = PhotonNetwork.Instantiate(GetRandomBuilding().name, spawnPlace.transform.position, randomRotation);
+        var building = PhotonNetwork.Instantiate("Prefabs/Buildings/" + GetRandomBuilding().name, spawnPlace.transform.position, randomRotation);
+
         spawnPlace.ChangeSpawnAllowed(false);
     }
 
