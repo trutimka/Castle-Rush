@@ -11649,17 +11649,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1536685903}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf3dfc020d64e98a133edd8345c0c69, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bc3cd84e5624fd6b869af47b126aeea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
   buildingMask:
     serializedVersion: 2
     m_Bits: 192
   spawnMask:
     serializedVersion: 2
     m_Bits: 64
+  prefabLine: {fileID: 141177058046618927, guid: 56890bfaf3cf02a419b47e34d9ee1888, type: 3}
 --- !u!1001 &1551457223
 PrefabInstance:
   m_ObjectHideFlags: 0
