@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ public abstract class Building : MonoBehaviour
     protected int Health;
     protected int MaxHealth;
     protected int Level;
+    public event Action OnLevelChanged;
     
     
     [SerializeField]
@@ -23,9 +25,9 @@ public abstract class Building : MonoBehaviour
 
         switch (Health)
         {
-            case <= 20: Level = 1;break;
-            case <= 40: Level = 2;break;
-            default: Level = 3;break;
+            case <= 20: Level = 1;OnLevelChanged?.Invoke();break;
+            case <= 40: Level = 2;OnLevelChanged?.Invoke();break;
+            default: Level = 3;OnLevelChanged?.Invoke();break;
         }
     }
     
@@ -56,9 +58,9 @@ public abstract class Building : MonoBehaviour
         
         switch (Health)
         {
-            case <= 20: Level = 1;break;
-            case <= 40: Level = 2;break;
-            default: Level = 3;break;
+            case <= 20: Level = 1;OnLevelChanged?.Invoke();break;
+            case <= 40: Level = 2;OnLevelChanged?.Invoke();break;
+            default: Level = 3;OnLevelChanged?.Invoke();break;
         }
     }
 
@@ -72,9 +74,9 @@ public abstract class Building : MonoBehaviour
         
         switch (Health)
         {
-            case <= 20: Level = 1;break;
-            case <= 40: Level = 2;break;
-            default: Level = 3;break;
+            case <= 20: Level = 1;OnLevelChanged?.Invoke();break;
+            case <= 40: Level = 2;OnLevelChanged?.Invoke();break;
+            default: Level = 3;OnLevelChanged?.Invoke();break;
         }
     }
     

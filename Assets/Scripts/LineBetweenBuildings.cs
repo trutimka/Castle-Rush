@@ -35,7 +35,7 @@ public class LineBetweenBuildings : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 10000, spawnMask))
             {
-                pointA = hit.collider.gameObject;
+                pointA = hit.transform.parent == null ? hit.transform.gameObject : hit.transform.parent.gameObject;
                 lineRenderer.SetPosition(0, pointA.transform.position);
                 Debug.Log(hit.transform.name);
                 Debug.Log("hit");
@@ -45,46 +45,39 @@ public class LineBetweenBuildings : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (pointA == null) return;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 10000, buildingMask))
             {
                 Vector3 direction = hit.point - pointA.transform.position;
                 float distance = direction.magnitude;
-
-                // Выполняем Raycast
-                if (Physics.Raycast(pointA.transform.position, direction.normalized, out RaycastHit hit2, distance, buildingMask))
+                
+                var hits = Physics.RaycastAll(pointA.transform.position, direction.normalized, distance, buildingMask);
+                var obj1 = hit.transform.parent == null ? hit.transform.gameObject : hit.transform.parent.gameObject;
+                foreach (var rayHit in hits)
                 {
-                    Debug.Log($"На пути найдено здание: {hit.collider.gameObject.name}");
-                    if (hit2.collider.gameObject == hit.collider.gameObject 
-                        || (hit.transform.parent != null && hit.transform.parent.gameObject == hit2.collider.gameObject) 
-                        || (hit2.transform.parent != null && hit2.transform.parent.gameObject == hit.collider.gameObject)
-                        || (hit.transform.parent != null && hit2.transform.parent != null && hit.transform.parent.parent.gameObject == hit2.transform.parent.gameObject))
-                    {
-                        pointB = hit.collider.gameObject;
-                        lineRenderer.SetPosition(1, pointB.transform.position);
-                        Debug.Log(hit.transform.name);
-                        Debug.Log("hit");
-                    }
-                    else
-                    {
-                        lineRenderer.SetPosition(1, pointA.transform.position);
-                    }
+                   var obj = rayHit.transform.parent == null ? rayHit.transform.gameObject : rayHit.transform.parent.gameObject;
+                   if (obj != pointA && obj != obj1)
+                   {
+                       lineRenderer.SetPosition(1, pointA.transform.position);
+                       pointA = null;
+                       return;
+                   }
                 }
-                else
-                {
-                    lineRenderer.SetPosition(1, pointA.transform.position);
-                }
+                pointB = obj1;
+                lineRenderer.SetPosition(1, pointB.transform.position);
             } 
             else
             {
                 lineRenderer.SetPosition(1, pointA.transform.position);
             }
-            
+            pointA = null;
         }
 
         if (Input.GetMouseButton(0))
         {
+            if (pointA == null) return;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 10000))
