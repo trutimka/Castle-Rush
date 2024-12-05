@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine;
 
 public class SpawnerTest : MonoBehaviour
@@ -43,7 +44,8 @@ public class SpawnerTest : MonoBehaviour
     private void Spawn(SpawnPlace spawnPlace)
     {
         var randomRotation = GetRandomRotation();
-        var building = Instantiate(GetRandomBuilding(), spawnPlace.transform.position, randomRotation);
+        
+        var building = PhotonNetwork.Instantiate(GetRandomBuilding().name, spawnPlace.transform.position, randomRotation);
         spawnPlace.ChangeSpawnAllowed(false);
     }
 

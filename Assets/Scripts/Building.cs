@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Photon.Pun;
 
-public abstract class Building : MonoBehaviour
+public abstract class Building : MonoBehaviourPun
 {
     protected Player Owner = null;
     protected double CountGoldPerSecond;

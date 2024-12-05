@@ -32,7 +32,7 @@ public class MatchMaker : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 
-            LoadScene();
+            //LoadScene();
         }
     }
 
@@ -44,7 +44,7 @@ public class MatchMaker : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 
-            LoadScene();
+            //LoadScene();
         }
     }
 
