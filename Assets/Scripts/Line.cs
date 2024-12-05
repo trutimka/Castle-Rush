@@ -22,10 +22,10 @@ public class Line : MonoBehaviour
         lineRenderer.startWidth = lineRenderer.endWidth = 1.5f;
     }
 
-    public void Init(GameObject startPoint)
+    public void Init(GameObject startPoint, Material material)
     {
         pointA = startPoint;
-        
+        lineRenderer.material = material;
         lineRenderer.SetPosition(0, pointA.transform.position);
     }
 
@@ -48,7 +48,7 @@ public class Line : MonoBehaviour
 
         lineRenderer.SetPosition(0, pointA.transform.position);
         lineRenderer.SetPosition(1, pointB.transform.position);
-
+        lineRenderer.enabled = false;
         OnLineCreated?.Invoke();
         return true;
     }

@@ -11,7 +11,7 @@ public class SpawnPlace : MonoBehaviour
     private bool _spawnAllowed = true;
     public bool SpawnAllowed => _spawnAllowed;
 
-    private void Start()
+    private void Awake()
     {
         Vector3[] directions = 
         {

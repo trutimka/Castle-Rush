@@ -9,6 +9,15 @@ public class Player : MonoBehaviour
     private double boostMultiplier = 1.01;
     [SerializeField]
     private int goldCount = 100;
+    
+    [SerializeField]
+    private Camera playerCamera;
+    public Camera PlayerCamera => playerCamera;
+    
+    [SerializeField]
+    private Material playerMaterial;
+    public Material PlayerMaterial => playerMaterial;
+    
     public double Boost => boost;
     public int GoldCount => goldCount;
     public bool SpendGold(int amount)

@@ -28,10 +28,13 @@ public class SpawnerTest : MonoBehaviour
     {
         foreach (var spawnPlace in _spawnPlaces)
         {
-            if (spawnPlace.SpawnAllowed && NoBuildingsNearby(spawnPlace))
+            if (UnityEngine.Random.Range(0, 101) < 51)
             {
-                Spawn(spawnPlace);
-                MarkNeighboursOccupied(spawnPlace);
+                if (spawnPlace.SpawnAllowed && NoBuildingsNearby(spawnPlace))
+                {
+                    Spawn(spawnPlace);
+                    MarkNeighboursOccupied(spawnPlace);
+                }
             }
         }
     }
@@ -45,7 +48,7 @@ public class SpawnerTest : MonoBehaviour
     {
         var randomRotation = GetRandomRotation();
         
-        var building = PhotonNetwork.Instantiate(GetRandomBuilding().name, spawnPlace.transform.position, randomRotation);
+        var building = Instantiate(GetRandomBuilding(), spawnPlace.transform.position, randomRotation);
         spawnPlace.ChangeSpawnAllowed(false);
     }
 
