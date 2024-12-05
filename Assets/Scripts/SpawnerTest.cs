@@ -10,11 +10,16 @@ public class SpawnerTest : MonoBehaviour
     [SerializeField] private GameObject _goldFarmPrefab;
     [SerializeField] private GameObject _shootingTowerPrefab;
 
+    [SerializeField] private GameObject StartPointPlayer1;
+    [SerializeField] private GameObject StartPointPlayer2;
+
     private List<SpawnPlace> _spawnPlaces = new List<SpawnPlace>();
 
     private void Start()
     {
         _spawnPlaces = _spawnPointsHolder.GetComponentsInChildren<SpawnPlace>().ToList();
+        MarkNeighboursOccupied(_spawnPlaces[1]);
+        MarkNeighboursOccupied(_spawnPlaces[_spawnPlaces.Count - 3]);
         FulfillGameField();
     }
 
