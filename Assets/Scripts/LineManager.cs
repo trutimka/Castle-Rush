@@ -10,7 +10,8 @@ public class LineManager : MonoBehaviour
     [SerializeField] private Line prefabLine;
     private List<Line> lines = new List<Line>();
     private Line currentLine;
-
+        //todo: добавить проверку пользователя, так как этот инстанс будет общим и его надо будет синхронить, также надо каждой линии добавить пользователя, который ей владеет 
+        //upd: А может и не надо, можно будет просто сделать для каждого пользователя по менеджеру.
     private void Update()
     {
         
