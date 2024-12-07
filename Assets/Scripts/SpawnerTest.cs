@@ -3,7 +3,7 @@ using System.Linq;
 using Photon.Pun;
 using UnityEngine;
 
-public class SpawnerTest : MonoBehaviour
+public class SpawnerTest : MonoBehaviourPun
 {
     [SerializeField] private Transform _spawnPointsHolder;
 
@@ -48,7 +48,7 @@ public class SpawnerTest : MonoBehaviour
     {
         var randomRotation = GetRandomRotation();
         
-        var building = Instantiate(GetRandomBuilding(), spawnPlace.transform.position, randomRotation);
+        var building = PhotonNetwork.Instantiate("Prefabs/Buildings/" + GetRandomBuilding().name, spawnPlace.transform.position, randomRotation);
         var buildingComponent = building.GetComponent<Building>();
         var maxHealth = 60;
         var startHealth = Random.Range(5, maxHealth + 1);

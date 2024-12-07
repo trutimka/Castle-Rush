@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
 
-public abstract class Building : MonoBehaviourPun
+public abstract class Building : MonoBehaviourPun, IPunObservable
 {
     [SerializeField]
     protected Player owner = null;
@@ -25,6 +25,28 @@ public abstract class Building : MonoBehaviourPun
     protected List<GameObject> spawnPoints;
     
     public List<GameObject> SpawnPoints => spawnPoints;
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(owner);
+            stream.SendNext(CountGoldPerSecond);
+            stream.SendNext(Health);
+            stream.SendNext(MaxHealth);
+            stream.SendNext(Level);
+        }
+        else
+        {
+            // Network player, receive data
+            this.owner = (Player)stream.ReceiveNext();
+            this.CountGoldPerSecond = (double)stream.ReceiveNext();
+            this.Health = (int)stream.ReceiveNext();
+            this.MaxHealth = (int)stream.ReceiveNext();
+            this.Level = (int)stream.ReceiveNext();
+        }
+    }
 
     public void Init(int startHealth, int maxHealth, double countGoldPerSecond = 1)
     {
