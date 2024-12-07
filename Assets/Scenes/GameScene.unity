@@ -2173,6 +2173,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartBuildingPlayer1
       objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: Level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1405222038}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: Health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: MaxHealth
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: CountGoldPerSecond
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621639705734347666, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1405222038}
     - target: {fileID: 4977908820394292911, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
       propertyPath: sceneViewId
       value: 2
@@ -2217,7 +2241,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8033576928660498790, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1405222038}
+    m_RemovedComponents:
+    - {fileID: 3621639705734347666, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+    - {fileID: 8033576928660498790, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2570,6 +2600,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartBuildingPlayer2
       objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: Level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1548746634}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: Health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: MaxHealth
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: CountGoldPerSecond
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621639705734347666, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1548746634}
     - target: {fileID: 4977908820394292911, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
       propertyPath: sceneViewId
       value: 1
@@ -2614,7 +2668,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8033576928660498790, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1548746634}
+    m_RemovedComponents:
+    - {fileID: 3621639705734347666, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+    - {fileID: 8033576928660498790, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10794,6 +10854,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   prefabLine: {fileID: 141177058046618927, guid: 56890bfaf3cf02a419b47e34d9ee1888, type: 3}
+  cubePrefab: {fileID: 654001632530116256, guid: 39baa0cb097e81b4e9bba3f9793eaabb, type: 3}
   player: {fileID: 0}
 --- !u!114 &1405222038
 MonoBehaviour:
@@ -11828,6 +11889,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   prefabLine: {fileID: 141177058046618927, guid: 56890bfaf3cf02a419b47e34d9ee1888, type: 3}
+  cubePrefab: {fileID: 654001632530116256, guid: 39baa0cb097e81b4e9bba3f9793eaabb, type: 3}
   player: {fileID: 0}
 --- !u!114 &1548746634
 MonoBehaviour:

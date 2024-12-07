@@ -29,19 +29,17 @@ public class Line : MonoBehaviour
         lineRenderer.SetPosition(0, pointA.transform.position);
     }
 
-    public bool FinishLine(GameObject endPoint)
+    public bool FinishLine(GameObject startPoint, GameObject endPoint)
     {
-        var closestPoints = FindClosestExits(pointA, endPoint); // Находим ближайшие выходы
-        pointA = closestPoints.Item1; // Перезаписываем pointA
-        pointB = closestPoints.Item2; // Перезаписываем pointB
-
+        pointA = startPoint;
+        pointB = endPoint;
         if (pointA == pointB) return false;
         
         var spawner = pointA.GetComponentInParent<MobSpawner>();
         if (spawner != null)
         {
             spawner.Init(); // Убедимся, что спавнер инициализирован
-            var isAdded = spawner.AddTarget(pointB);
+            var isAdded = spawner.AddTarget(pointA, pointB);
             if (!isAdded) return false;
             spawner.StartSpawning();
         }
@@ -58,47 +56,7 @@ public class Line : MonoBehaviour
         var spawner = pointA.GetComponentInParent<MobSpawner>();
         if (spawner != null)
         {
-            spawner.RemoveTarget(pointB);
+            spawner.RemoveTarget(pointA, pointB);
         }
-    }
-    
-
-    private (GameObject, GameObject) FindClosestExits(GameObject buildingA, GameObject buildingB)
-    {
-        if (buildingA == null || buildingB == null) return (null, null);
-
-        // Получаем все выходы для обоих зданий
-        var exitsA = buildingA.GetComponentsInChildren<Transform>()
-            .Where(t => t != buildingA.transform) // Исключаем сам объект здания
-            .Select(t => t.gameObject)
-            .ToList();
-
-        var exitsB = buildingB.GetComponentsInChildren<Transform>()
-            .Where(t => t != buildingB.transform)
-            .Select(t => t.gameObject)
-            .ToList();
-
-        if (exitsA.Count == 0 || exitsB.Count == 0) return (buildingA, buildingB); // Если нет выходов, соединяем здания
-
-        GameObject closestA = null;
-        GameObject closestB = null;
-        float minDistance = float.MaxValue;
-
-        // Перебираем все пары выходов между двумя зданиями
-        foreach (var exitA in exitsA)
-        {
-            foreach (var exitB in exitsB)
-            {
-                float distance = Vector3.Distance(exitA.transform.position, exitB.transform.position);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    closestA = exitA;
-                    closestB = exitB;
-                }
-            }
-        }
-
-        return (closestA, closestB); // Возвращаем пару ближайших выходов
     }
 }

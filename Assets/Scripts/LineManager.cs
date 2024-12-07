@@ -12,6 +12,8 @@ public class LineManager : MonoBehaviour
     [SerializeField] private Line prefabLine;
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Player player;
+    
+    private Dictionary<Line, GameObject> roads = new Dictionary<Line, GameObject>();
     private List<Line> lines = new List<Line>();
     private Line currentLine;
         //todo: добавить проверку пользователя, так как этот инстанс будет общим и его надо будет синхронить, также надо каждой линии добавить пользователя, который ей владеет 
@@ -37,15 +39,16 @@ public class LineManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 10000, spawnMask))
             {
                 var pointA = hit.transform.parent == null ? hit.transform.gameObject : hit.transform.parent.gameObject;
-                if (pointA.TryGetComponent<LineConnectionPoint>(out var line))
+                if (pointA.TryGetComponent<Building>(out var building))
                 {
-                    if (!line.Owner == player) return;
-                }
-                currentLine = Instantiate(prefabLine, Vector3.zero, Quaternion.identity, transform);
-                currentLine.Init(pointA, player.PlayerMaterial);
+                    if (building.Owner != player || player == null) return;
+                    
+                    currentLine = Instantiate(prefabLine, Vector3.zero, Quaternion.identity, transform);
+                    currentLine.Init(pointA, player.PlayerMaterial);
                 
-                Debug.Log(hit.transform.name);
-                Debug.Log("hit");
+                    /*Debug.Log(hit.transform.name);
+                    Debug.Log("hit");*/
+                }
             }
             
         }
@@ -73,73 +76,111 @@ public class LineManager : MonoBehaviour
                     }
                 }
                 var closestPoints = FindClosestExits(currentLine.GetPointA(), obj1);
-                var pointA = closestPoints.Item1; // Перезаписываем pointA
+                var pointA = closestPoints.Item1;
                 var pointB = closestPoints.Item2;
+                var startBuilding = pointA.transform.parent == null ? pointA.transform.gameObject : pointA.transform.parent.gameObject;
+                var targetBuilding = pointB.transform.parent == null ? pointB.transform.gameObject : pointB.transform.parent.gameObject;
+                Debug.Log(startBuilding + " - " + targetBuilding);
+                Debug.Log(pointA + " -> " + pointB);
                 
-                if (pointB.TryGetComponent<LineConnectionPoint>(out var line))
+                var startBuildingComponent = startBuilding.GetComponent<Building>();
+                var targetBuildingComponent = targetBuilding.GetComponent<Building>();
+                
+                if (targetBuildingComponent.Owner == player || targetBuildingComponent.Owner == null)
                 {
-                    //line.SetOwner(currentLine.GetPointA().GetComponent<LineConnectionPoint>().Owner);
-                    if (line.Owner == player || line.Owner == null)
+                    var isFinished = currentLine.FinishLine(pointA, pointB);
+                    if (!isFinished)
                     {
-                        var isFinished = currentLine.FinishLine(pointB);
-                        if (!isFinished)
-                        {
-                            Destroy(currentLine.gameObject);
-                            currentLine = null;
-                            return;
-                        }
-                        lines.Add(currentLine); // Добавляем в список
-                        
-                        var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
-
-                        Vector3 position = pointB.transform.position - currentLine.GetPointA().transform.position;
-                        gameObjectCube.transform.position = currentLine.GetPointA().transform.position + position / 2;
-
-                        Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
-                        gameObjectCube.transform.localScale = scale;
-
-                        float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
-                        gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-
-                        gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
-
-                        Debug.Log($"Линия завершена: {currentLine.GetPointA().name} -> {currentLine.GetPointB().name}");
-
-                        currentLine = null; // Сбрасываем текущую линию
+                        Destroy(currentLine.gameObject);
+                        currentLine = null;
+                        return;
                     }
-                    else
+                    var spawner = pointA.GetComponentInParent<MobSpawner>();
+                    spawner.OnRemoveTarget += RemoveLine;
+                    lines.Add(currentLine); // Добавляем в список
+                    
+                    var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+
+                    Vector3 position = pointB.transform.position - pointA.transform.position;
+                    Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
+                    float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
+                    
+                    gameObjectCube.transform.position = pointA.transform.position + position / 2;
+                    gameObjectCube.transform.localScale = scale;
+                    gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
+                    gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
+                    roads[currentLine] = gameObjectCube;
+
+                    Debug.Log($"Линия завершена: {currentLine.GetPointA().name} -> {currentLine.GetPointB().name}");
+
+                    currentLine = null; // Сбрасываем текущую линию
+                }
+                else
+                {
+                    bool isExist = false;
+                    var anotherLineManager = targetBuildingComponent.Owner.PlayerCamera.GetComponent<LineManager>();
+                    Line isExistLine = null;
+                    foreach (var player2Line in anotherLineManager.lines)
                     {
-                        Debug.Log("polniy pizdec");
-                        var isFinished = currentLine.FinishLine(pointB);
-                        if (!isFinished)
+                        if (player2Line.GetPointA() == pointB && player2Line.GetPointB() == pointA)
                         {
-                            Destroy(currentLine.gameObject);
-                            currentLine = null;
-                            return;
+                            isExist = true;
+                            isExistLine = player2Line;
+                            Destroy(anotherLineManager.roads[player2Line]);
+                            break;
                         }
-                        lines.Add(currentLine); // Добавляем в список
-                        
+                    }
+                    
+                    var isFinished = currentLine.FinishLine(pointA, pointB);
+                    if (!isFinished)
+                    {
+                        Destroy(currentLine.gameObject);
+                        currentLine = null;
+                        return;
+                    }
+                    var spawner = pointA.GetComponentInParent<MobSpawner>();
+                    spawner.OnRemoveTarget += RemoveLine;
+                    lines.Add(currentLine); // Добавляем в список
+
+                    if (isExist)
+                    {
                         var gameObjectCube1 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
                         var gameObjectCube2 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
 
-                        Vector3 position = pointB.transform.position - currentLine.GetPointA().transform.position;
+                        Vector3 position = pointB.transform.position - pointA.transform.position;
                         Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
                         float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
-                        gameObjectCube1.transform.position = currentLine.GetPointA().transform.position + position / 4;
+                        gameObjectCube1.transform.position = pointA.transform.position + position / 4;
                         gameObjectCube1.transform.localScale = scale / 2;
                         gameObjectCube1.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                        gameObjectCube1.GetComponent<MeshRenderer>().material = pointA.GetComponent<LineConnectionPoint>().Owner.PlayerMaterial;
-                        
-                        gameObjectCube2.transform.position = currentLine.GetPointA().transform.position + position * 3 / 4;
+                        gameObjectCube1.GetComponent<MeshRenderer>().material = startBuildingComponent.Owner.PlayerMaterial;
+                    
+                        gameObjectCube2.transform.position = pointA.transform.position + position * 3 / 4;
                         gameObjectCube2.transform.localScale = scale / 2;
                         gameObjectCube2.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                        gameObjectCube2.GetComponent<MeshRenderer>().material = pointB.GetComponent<LineConnectionPoint>().Owner.PlayerMaterial;
-
-                        Debug.Log($"Линия завершена: {currentLine.GetPointA().name} -> {currentLine.GetPointB().name}");
-
-                        currentLine = null; // Сбрасываем текущую линию
+                        gameObjectCube2.GetComponent<MeshRenderer>().material = targetBuildingComponent.Owner.PlayerMaterial;
+                        anotherLineManager.roads[isExistLine] = gameObjectCube2;
+                        roads[currentLine] = gameObjectCube1;
                     }
+                    else
+                    {
+                        var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                        Vector3 position = pointB.transform.position - pointA.transform.position;
+                        Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
+                        float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
+
+                        gameObjectCube.transform.position = pointA.transform.position + position / 2;
+                        gameObjectCube.transform.localScale = scale;
+                        gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
+                        gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
+                        roads[currentLine] = gameObjectCube;
+                    }
+
+                    Debug.Log($"Линия завершена: {currentLine.GetPointA().name} -> {currentLine.GetPointB().name}");
+
+                    currentLine = null; // Сбрасываем текущую линию
                 }
+                
             }
             else
             {
@@ -180,7 +221,7 @@ public class LineManager : MonoBehaviour
         GameObject closestA = null;
         GameObject closestB = null;
         float minDistance = float.MaxValue;
-
+        
         // Перебираем все пары выходов между двумя зданиями
         foreach (var exitA in exitsA)
         {
@@ -195,7 +236,16 @@ public class LineManager : MonoBehaviour
                 }
             }
         }
-
         return (closestA, closestB); // Возвращаем пару ближайших выходов
+    }
+
+    private void RemoveLine(GameObject building, GameObject endLine)
+    {
+        var line = lines.Find(t => t.GetPointA() == building && t.GetPointB() == endLine);
+        if (line == null) return;
+        Destroy(roads[line]);
+        roads.Remove(line);
+        Destroy(line);
+        lines.Remove(line);
     }
 }

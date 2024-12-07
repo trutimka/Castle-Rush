@@ -5,12 +5,20 @@ using Photon.Pun;
 
 public abstract class Building : MonoBehaviourPun
 {
-    protected Player Owner = null;
+    [SerializeField]
+    protected Player owner = null;
+    [SerializeField]
     protected double CountGoldPerSecond;
+    [SerializeField]
     protected int Health;
+    [SerializeField]
     protected int MaxHealth;
+    [SerializeField]
     protected int Level;
     public event Action OnLevelChanged;
+    public event Action OnOwnerChanged;
+    
+    public Player Owner => owner;
     
     
     [SerializeField]
@@ -31,31 +39,22 @@ public abstract class Building : MonoBehaviourPun
             default: Level = 3;OnLevelChanged?.Invoke();break;
         }
     }
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public virtual void ChangePlayer(Player player)
     {
-        
+        owner = player;
+        OnOwnerChanged?.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void BuildingHit(int damage, Player player)
     {
-        
-    }
-
-    protected virtual void ChangePlayer(Player player)
-    {
-        Owner = player;
-    }
-
-    protected virtual void BuildingHit(Mob mob)
-    {
-        Health -= mob.Damage;
         if (Health <= 0)
         {
-            ChangePlayer(mob.Owner);
+            Health = 1;
+            ChangePlayer(player);
         }
+        Health -= damage;
+        if (Health <= 0) Health = 0;
         
         switch (Health)
         {
@@ -65,9 +64,9 @@ public abstract class Building : MonoBehaviourPun
         }
     }
 
-    protected virtual void BuildingHeal(Mob mob)
+    public virtual void BuildingHeal(int damage)
     {
-        Health += mob.Damage;
+        Health += damage;
         if (Health > MaxHealth)
         {
             Health = MaxHealth;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,38 +8,43 @@ public class MobSpawner : Building
 {
     [SerializeField]
     private GameObject mobPrefab;
-
-    private List<GameObject> _targets = new List<GameObject>();
+    
+    private List<Tuple<GameObject, GameObject>> _roads = new List<Tuple<GameObject, GameObject>>();
     
     [SerializeField]
     private float spawnInterval = 3f; // Интервал между спавнами в секундах
 
     private bool isSpawning = false; // Флаг, чтобы контролировать процесс спавна
     private Coroutine spawnCoroutine; // Ссылка на корутину спавна
+    
+    public event Action<GameObject, GameObject> OnRemoveTarget;
 
     public void Init()
     {
-        OnLevelChanged += ResetTargets;
+        OnLevelChanged += UpdateLevel;
+        OnOwnerChanged += RestartSpawn;
     }
     
-    public bool AddTarget(GameObject target)
+    public bool AddTarget(GameObject start, GameObject target)
     {
-        // if (_targets.Count >= Level) return false; // Ограничение на количество целей по уровню
-        if (_targets.Contains(target)) return false; // Цель уже добавлена
-        _targets.Add(target);
+        Debug.Log("Adding " + target.name + " to MobSpawner");
+        if (_roads.Count >= Level) return false;
+        if (_roads.FindAll(t => (t.Item1 == start && t.Item2 == target)).Count() != 0) return false;
+        _roads.Add(new Tuple<GameObject, GameObject>(start, target));
+        Debug.Log(target.name + " is added to MobSpawner");
         return true;
     }
 
     // Удалить цель (если линия удалена)
-    public void RemoveTarget(GameObject target)
+    public void RemoveTarget(GameObject start, GameObject target)
     {
-        _targets.Remove(target);
-        if (_targets.Count == 0) StopSpawning();
+        _roads.RemoveAll(t => t.Item1 == target && t.Item2 == target);
+        if (_roads.Count == 0) StopSpawning();
     }
 
     public void StartSpawning()
     {
-        if (isSpawning || _targets.Count == 0) return;
+        if (isSpawning || _roads.Count == 0) return;
         isSpawning = true;
         spawnCoroutine = StartCoroutine(SpawnMobsPeriodically());
         Debug.Log("Spawning Mobs");
@@ -56,9 +62,25 @@ public class MobSpawner : Building
     }
 
     // Сбрасываем цели, если уровень изменился
-    private void ResetTargets()
+    private void UpdateLevel()
     {
-        if (_targets.Count > Level) _targets.RemoveRange(0, _targets.Count - Level);
+        // Debug.Log("Delete target: " + _targets.Last());
+        if (_roads.Count > Level)
+        {
+            OnRemoveTarget?.Invoke(_roads.Last().Item1, _roads.Last().Item2);
+            var isDeleted = _roads.Remove(_roads.Last());
+            Debug.Log("Is Deleted = " + isDeleted);
+        }
+    }
+
+    private void RestartSpawn()
+    {
+        StopSpawning();
+        foreach (var road in _roads)
+        {
+            OnRemoveTarget?.Invoke(road.Item1, road.Item2);
+        }
+        _roads.Clear();
     }
 
     // Корутин для периодического спавна мобов
@@ -66,10 +88,10 @@ public class MobSpawner : Building
     {
         while (isSpawning)
         {
-            foreach (var target in _targets)
+            foreach (var target in _roads)
             {
                 if (target == null) continue; // Если цель была удалена
-                SpawnMob(target);
+                SpawnMob(target.Item2);
             }
 
             yield return new WaitForSecondsRealtime(spawnInterval); // Ждем интервал перед следующим спавном
@@ -93,16 +115,9 @@ public class MobSpawner : Building
 
             if (mobComponent != null)
             {
+                mobComponent.SetOwner(Owner);
                 mobComponent.Target = target; // Устанавливаем цель для моба
             }
         }
-    }
-
-    private bool SetTarget(GameObject target)
-    {
-        if (_targets.Count >= Level) return false;
-        if (_targets.Contains(target)) return false;
-        _targets.Add(target);
-        return true;
     }
 }

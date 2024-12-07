@@ -40,6 +40,11 @@ public class Mob : MonoBehaviour
         }
     }
 
+    public void SetOwner(Player newOwner)
+    {
+        owner = newOwner;
+    }
+
     private void InitializeMovement()
     {
         // Вычисляем направление движения
@@ -57,6 +62,15 @@ public class Mob : MonoBehaviour
     {
         animator.SetTrigger("Attack");
         Destroy(gameObject, 0.75f);
+        var targetBuilding = (Target.transform.parent == null ? Target : Target.transform.parent.gameObject).GetComponent<Building>();
+        if (targetBuilding.Owner == owner)
+        {
+            targetBuilding.BuildingHeal(damage);
+        }
+        else
+        {
+            targetBuilding.BuildingHit(damage, owner);
+        }
     }
     
     private void FixedUpdate()
@@ -86,4 +100,6 @@ public class Mob : MonoBehaviour
         isRunning = false;
         InitializeAttacking();
     }
+    
+    
 }
