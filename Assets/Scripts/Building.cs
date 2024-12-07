@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
 
-public abstract class Building : MonoBehaviourPun, IPunObservable
+public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField]
     protected Player owner = null;

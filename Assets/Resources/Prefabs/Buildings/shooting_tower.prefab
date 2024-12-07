@@ -302,6 +302,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf24a8e3ec8447019cfe11ea33b34d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  CountGoldPerSecond: 0
+  Health: 0
+  MaxHealth: 0
+  Level: 0
   spawnPoints:
   - {fileID: 4132562765861818599}
   - {fileID: 7663188207185910660}
@@ -322,11 +327,13 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
+  - {fileID: 9093166777856935789}
   - {fileID: 6812944476745851529}
+  - {fileID: 9093166777856935789}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
