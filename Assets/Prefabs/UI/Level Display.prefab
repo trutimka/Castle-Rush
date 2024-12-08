@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8688850603214628452}
   - component: {fileID: 1984758490641427521}
   - component: {fileID: 855117409109255691}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: Level Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 4752874474652562216}
   - component: {fileID: 4404524160886614876}
   - component: {fileID: 3397974860817075971}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: Level Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,3 +253,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 0}
   levelText: {fileID: 855117409109255691}
+  mainCamera: {fileID: 0}

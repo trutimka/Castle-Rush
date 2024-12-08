@@ -25,6 +25,11 @@ public class BuildingLevelDisplay : MonoBehaviour
 
     private void OwnerChanged()
     {
+        if (building.Owner == null)
+        {
+            levelText.color = Color.white;
+            return;
+        }
         levelText.color = building.Owner.PlayerColor;
     }
 

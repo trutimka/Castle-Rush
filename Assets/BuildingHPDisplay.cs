@@ -26,6 +26,11 @@ public class BuildingHPDisplay : MonoBehaviour
 
     private void BuildingOnOnOwnerChanged()
     {
+        if (_building.Owner == null)
+        {
+            _hpText.color = Color.white;
+            return;
+        }
         _hpText.color = _building.Owner.PlayerColor;
     }
 

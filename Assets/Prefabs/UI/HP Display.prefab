@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4501968687949828854}
   - component: {fileID: 4805250570220997250}
   - component: {fileID: 2284830297545883244}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: HP Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _building: {fileID: 0}
   _hpText: {fileID: 8381852345875826645}
+  mainCamera: {fileID: 0}
 --- !u!1 &3482892746780601469
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +129,7 @@ GameObject:
   - component: {fileID: 512092159034935226}
   - component: {fileID: 7207142420559875487}
   - component: {fileID: 8381852345875826645}
-  m_Layer: 7
+  m_Layer: 5
   m_Name: HP TEXT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
