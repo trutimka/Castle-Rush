@@ -2,8 +2,9 @@
 
 public class GoldFarmer : Building
 {
-    protected override double? GenerateGold()
+    [SerializeField] private float goldBooster = 2;
+    protected override void GenerateGold()
     {
-        return base.GenerateGold() * 2;
+        Owner.AddGold(Owner.Boost * CountGoldPerSecond * goldBooster);
     }
 }

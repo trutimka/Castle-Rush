@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class MobSpawner : Building
 {
-    [SerializeField]
-    private GameObject mobPrefab;
-    
     private List<Tuple<GameObject, GameObject>> _roads = new List<Tuple<GameObject, GameObject>>();
     
     [SerializeField]
@@ -94,7 +91,7 @@ public class MobSpawner : Building
                 SpawnMob(target.Item2);
             }
 
-            yield return new WaitForSecondsRealtime(spawnInterval); // Ждем интервал перед следующим спавном
+            yield return new WaitForSecondsRealtime(spawnInterval / Owner.Boost); // Ждем интервал перед следующим спавном
             
         }
 
@@ -110,7 +107,7 @@ public class MobSpawner : Building
 
         if (spawnPoint != null)
         {
-            var mob = Instantiate(mobPrefab, spawnPoint.transform.position, Quaternion.identity);
+            var mob = Instantiate(Owner.MobPrefab, spawnPoint.transform.position, Quaternion.identity);
             var mobComponent = mob.GetComponent<Mob>();
 
             if (mobComponent != null)

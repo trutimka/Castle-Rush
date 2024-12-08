@@ -8,7 +8,7 @@ public abstract class Building : MonoBehaviourPun
     [SerializeField]
     protected Player owner = null;
     [SerializeField]
-    protected double CountGoldPerSecond;
+    protected float CountGoldPerSecond;
     [SerializeField]
     protected int Health;
     [SerializeField]
@@ -27,7 +27,7 @@ public abstract class Building : MonoBehaviourPun
     
     public List<GameObject> SpawnPoints => spawnPoints;
 
-    public void Init(int startHealth, int maxHealth, double countGoldPerSecond = 1)
+    public void Init(int startHealth, int maxHealth, float countGoldPerSecond = 1)
     {
         Health = startHealth;
         MaxHealth = maxHealth;
@@ -48,6 +48,22 @@ public abstract class Building : MonoBehaviourPun
         OnLevelChanged?.Invoke(Level);
         OnOwnerChanged?.Invoke();
         OnHealthChanged?.Invoke(Health);
+    }
+
+    [SerializeField]
+    private float generationInterval = 1f;
+    private float timeSinceLastGeneration = 0f;
+    
+    private void Update()
+    {
+        if (Owner == null) return;
+        timeSinceLastGeneration += Time.unscaledDeltaTime;
+
+        if (timeSinceLastGeneration >= generationInterval)
+        {
+            GenerateGold();
+            timeSinceLastGeneration = 0f;
+        }
     }
 
     public virtual void ChangePlayer(Player player)
@@ -94,9 +110,9 @@ public abstract class Building : MonoBehaviourPun
         }
     }
     
-    protected virtual double? GenerateGold()
+    protected virtual void GenerateGold()
     {
-        return Owner?.Boost * CountGoldPerSecond;
+        Owner.AddGold(Owner.Boost * CountGoldPerSecond);
     }
 
     protected virtual void UpdateMaxHealth(int difference)
@@ -104,7 +120,7 @@ public abstract class Building : MonoBehaviourPun
         MaxHealth += difference;
     }
 
-    protected virtual void UpdateCountGoldPerSecond(double difference)
+    protected virtual void UpdateCountGoldPerSecond(float difference)
     {
         CountGoldPerSecond += difference;
     }

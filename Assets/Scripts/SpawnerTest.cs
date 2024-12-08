@@ -52,7 +52,7 @@ public class SpawnerTest : MonoBehaviour
         var buildingComponent = building.GetComponent<Building>();
         var maxHealth = 60;
         var startHealth = Random.Range(5, maxHealth + 1);
-        var countGoldPerSecond = 0.1f;
+        var countGoldPerSecond = 1f;
         buildingComponent.Init(startHealth, maxHealth, countGoldPerSecond);
         spawnPlace.ChangeSpawnAllowed(false);
     }

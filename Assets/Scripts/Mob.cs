@@ -77,7 +77,7 @@ public class Mob : MonoBehaviour
     {
         if (isRunning)
         {
-            Vector3 move = movementDirection * speed * Time.deltaTime;
+            Vector3 move =  movementDirection * Owner.Boost * speed * Time.deltaTime;
             rb.MovePosition(transform.position + move);
 
             // Проверяем, достиг ли моб цели

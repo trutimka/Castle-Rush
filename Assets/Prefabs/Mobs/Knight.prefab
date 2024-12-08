@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 2
   damage: 1
-  speed: 1
+  speed: 3
   attackSpeed: 1
   Target: {fileID: 0}
 --- !u!1 &8858069792800950538
