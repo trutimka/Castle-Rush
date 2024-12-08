@@ -16,7 +16,12 @@ public class Player : MonoBehaviour
     
     [SerializeField]
     private Material playerMaterial;
+    
+    [SerializeField]
+    private Color playerColor;
+    
     public Material PlayerMaterial => playerMaterial;
+    public Color PlayerColor => playerColor;
     
     public double Boost => boost;
     public int GoldCount => goldCount;

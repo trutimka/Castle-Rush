@@ -62,7 +62,7 @@ public class MobSpawner : Building
     }
 
     // Сбрасываем цели, если уровень изменился
-    private void UpdateLevel()
+    private void UpdateLevel(int level)
     {
         // Debug.Log("Delete target: " + _targets.Last());
         if (_roads.Count > Level)

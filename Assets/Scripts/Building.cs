@@ -15,7 +15,8 @@ public abstract class Building : MonoBehaviourPun
     protected int MaxHealth;
     [SerializeField]
     protected int Level;
-    public event Action OnLevelChanged;
+    public event Action<int> OnLevelChanged;
+    public event Action<int> OnHealthChanged;
     public event Action OnOwnerChanged;
     
     public Player Owner => owner;
@@ -31,13 +32,22 @@ public abstract class Building : MonoBehaviourPun
         Health = startHealth;
         MaxHealth = maxHealth;
         CountGoldPerSecond = countGoldPerSecond;
+        
+        OnHealthChanged?.Invoke(Health);
 
         switch (Health)
         {
-            case <= 20: Level = 1;OnLevelChanged?.Invoke();break;
-            case <= 40: Level = 2;OnLevelChanged?.Invoke();break;
-            default: Level = 3;OnLevelChanged?.Invoke();break;
+            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
+            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
+            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
         }
+    }
+
+    private void Start()
+    {
+        OnLevelChanged?.Invoke(Level);
+        OnOwnerChanged?.Invoke();
+        OnHealthChanged?.Invoke(Health);
     }
 
     public virtual void ChangePlayer(Player player)
@@ -56,11 +66,13 @@ public abstract class Building : MonoBehaviourPun
         Health -= damage;
         if (Health <= 0) Health = 0;
         
+        OnHealthChanged?.Invoke(Health);
+        
         switch (Health)
         {
-            case <= 20: Level = 1;OnLevelChanged?.Invoke();break;
-            case <= 40: Level = 2;OnLevelChanged?.Invoke();break;
-            default: Level = 3;OnLevelChanged?.Invoke();break;
+            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
+            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
+            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
         }
     }
 
@@ -72,11 +84,13 @@ public abstract class Building : MonoBehaviourPun
             Health = MaxHealth;
         }
         
+        OnHealthChanged?.Invoke(Health);
+        
         switch (Health)
         {
-            case <= 20: Level = 1;OnLevelChanged?.Invoke();break;
-            case <= 40: Level = 2;OnLevelChanged?.Invoke();break;
-            default: Level = 3;OnLevelChanged?.Invoke();break;
+            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
+            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
+            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
         }
     }
     
