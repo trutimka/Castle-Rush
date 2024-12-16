@@ -8,6 +8,7 @@ public class CamerManager : MonoBehaviour
     [SerializeField] private Camera camera2;
     void Start()
     {
+        UnityEngine.Debug.Log(PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.IsMasterClient)
         {
             camera1.gameObject.SetActive(true);
