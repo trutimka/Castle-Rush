@@ -21,7 +21,10 @@ public class SpawnerTest : MonoBehaviourPun
         _spawnPlaces = _spawnPointsHolder.GetComponentsInChildren<SpawnPlace>().ToList();
         MarkNeighboursOccupied(_spawnPlaces[1]);
         MarkNeighboursOccupied(_spawnPlaces[_spawnPlaces.Count - 3]);
-        FulfillGameField();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            FulfillGameField();
+        }
     }
 
     private void FulfillGameField()

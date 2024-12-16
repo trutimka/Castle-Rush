@@ -1,8 +1,9 @@
 ﻿
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPunCallbacks, IPunObservable
 {
     protected double boost = 1.0;
     [SerializeField]
@@ -32,5 +33,21 @@ public class Player : MonoBehaviour
         if (amount < 0) return false;
         goldCount += amount;
         return true;
+    }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(boost);
+            stream.SendNext(boostMultiplier);
+            stream.SendNext(goldCount);
+        }
+        else
+        {
+            boost = (double)stream.ReceiveNext();
+            boostMultiplier = (double)stream.ReceiveNext();
+            goldCount = (int)stream.ReceiveNext();
+        }
     }
 }

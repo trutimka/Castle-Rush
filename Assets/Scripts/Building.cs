@@ -40,11 +40,11 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             // Network player, receive data
-            this.owner = (Player)stream.ReceiveNext();
-            this.CountGoldPerSecond = (double)stream.ReceiveNext();
-            this.Health = (int)stream.ReceiveNext();
-            this.MaxHealth = (int)stream.ReceiveNext();
-            this.Level = (int)stream.ReceiveNext();
+            owner = (Player)stream.ReceiveNext();
+            CountGoldPerSecond = (double)stream.ReceiveNext();
+            Health = (int)stream.ReceiveNext();
+            MaxHealth = (int)stream.ReceiveNext();
+            Level = (int)stream.ReceiveNext();
         }
     }
 
