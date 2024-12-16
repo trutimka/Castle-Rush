@@ -11,11 +11,11 @@ public class CamerManager : MonoBehaviour
         UnityEngine.Debug.Log(PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.IsMasterClient)
         {
-            camera1.gameObject.SetActive(true);
+            camera1.enabled = true;
         }
         else
         {
-            camera2.gameObject.SetActive(true);
+            camera2.enabled = true;
         }
     }
 
