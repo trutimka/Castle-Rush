@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine;
 
 public class MobSpawner : Building
@@ -110,7 +111,8 @@ public class MobSpawner : Building
 
         if (spawnPoint != null)
         {
-            var mob = Instantiate(mobPrefab, spawnPoint.transform.position, Quaternion.identity);
+            Debug.Log(mobPrefab.name);
+            var mob = PhotonNetwork.Instantiate("Prefabs/Mobs/" + mobPrefab.name, spawnPoint.transform.position, Quaternion.identity);
             var mobComponent = mob.GetComponent<Mob>();
 
             if (mobComponent != null)

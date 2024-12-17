@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
@@ -99,7 +100,7 @@ public class LineManager : MonoBehaviour
                     spawner.OnRemoveTarget += RemoveLine;
                     lines.Add(currentLine); // Добавляем в список
                     
-                    var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                    var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
 
                     Vector3 position = pointB.transform.position - pointA.transform.position;
                     Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -144,8 +145,8 @@ public class LineManager : MonoBehaviour
 
                     if (isExist)
                     {
-                        var gameObjectCube1 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
-                        var gameObjectCube2 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                        var gameObjectCube1 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+                        var gameObjectCube2 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
 
                         Vector3 position = pointB.transform.position - pointA.transform.position;
                         Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -164,7 +165,7 @@ public class LineManager : MonoBehaviour
                     }
                     else
                     {
-                        var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                        var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
                         Vector3 position = pointB.transform.position - pointA.transform.position;
                         Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
                         float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;

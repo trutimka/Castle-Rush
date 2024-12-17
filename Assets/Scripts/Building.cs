@@ -31,7 +31,7 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             // We own this player: send the others our data
-            stream.SendNext(owner);
+            //stream.SendNext(owner);
             stream.SendNext(CountGoldPerSecond);
             stream.SendNext(Health);
             stream.SendNext(MaxHealth);
@@ -40,7 +40,7 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             // Network player, receive data
-            owner = (Player)stream.ReceiveNext();
+            //owner = stream.ReceiveNext() as Player;
             CountGoldPerSecond = (double)stream.ReceiveNext();
             Health = (int)stream.ReceiveNext();
             MaxHealth = (int)stream.ReceiveNext();
