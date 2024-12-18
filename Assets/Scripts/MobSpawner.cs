@@ -35,7 +35,7 @@ public class MobSpawner : Building
     // Удалить цель (если линия удалена)
     public void RemoveTarget(GameObject start, GameObject target)
     {
-        _roads.RemoveAll(t => t.Item1 == target && t.Item2 == target);
+        _roads.RemoveAll(t => t.Item1 == start && t.Item2 == target);
         if (_roads.Count == 0) StopSpawning();
     }
 

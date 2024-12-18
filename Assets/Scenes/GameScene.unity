@@ -10957,10 +10957,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 448
   spawnMask:
     serializedVersion: 2
     m_Bits: 64
+  shoutingMask:
+    serializedVersion: 2
+    m_Bits: 256
+  roadMask:
+    serializedVersion: 2
+    m_Bits: 512
   prefabLine: {fileID: 141177058046618927, guid: 56890bfaf3cf02a419b47e34d9ee1888, type: 3}
   cubePrefab: {fileID: 654001632530116256, guid: 39baa0cb097e81b4e9bba3f9793eaabb, type: 3}
   player: {fileID: 0}
@@ -10979,9 +10985,11 @@ MonoBehaviour:
   boostMultiplier: 1.01
   goldCount: 100
   _mobPrefab: {fileID: 5851142436804899093, guid: 9423b947e9df24b58be4495298f86f5c, type: 3}
+  _bimbaPrefab: {fileID: 421325518138290853, guid: 594f29270fc3a44e9b015f498c4901e5, type: 3}
   playerCamera: {fileID: 1405222034}
   playerMaterial: {fileID: 2100000, guid: 914c9d3808edffc469047796ba8a270c, type: 2}
   playerColor: {r: 0, g: 0, b: 1, a: 1}
+  PlayerNumber: 1
   slowdownInterval: 2
 --- !u!1 &1411402100
 GameObject:
@@ -11996,10 +12004,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingMask:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 448
   spawnMask:
     serializedVersion: 2
     m_Bits: 64
+  shoutingMask:
+    serializedVersion: 2
+    m_Bits: 256
+  roadMask:
+    serializedVersion: 2
+    m_Bits: 512
   prefabLine: {fileID: 141177058046618927, guid: 56890bfaf3cf02a419b47e34d9ee1888, type: 3}
   cubePrefab: {fileID: 654001632530116256, guid: 39baa0cb097e81b4e9bba3f9793eaabb, type: 3}
   player: {fileID: 0}
@@ -12018,9 +12032,11 @@ MonoBehaviour:
   boostMultiplier: 1.01
   goldCount: 100
   _mobPrefab: {fileID: 8023899632448304802, guid: cc66b1f87dd4c4688ae6286b556fc48a, type: 3}
+  _bimbaPrefab: {fileID: 421325518138290853, guid: 594f29270fc3a44e9b015f498c4901e5, type: 3}
   playerCamera: {fileID: 1548746631}
   playerMaterial: {fileID: 2100000, guid: c3c1ca7218e9fe84d914dfc33c066d92, type: 2}
   playerColor: {r: 1, g: 0, b: 0, a: 1}
+  PlayerNumber: 2
   slowdownInterval: 2
 --- !u!1001 &1551457223
 PrefabInstance:
@@ -13186,6 +13202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1648681165}
   - component: {fileID: 1648681164}
+  - component: {fileID: 1648681166}
   m_Layer: 0
   m_Name: Spawner Buildings
   m_TagString: Untagged
@@ -13226,6 +13243,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1648681166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648681163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8dfb4138d91246c9bf5bf0445118ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Camera: {fileID: 1405222034}
+  player2Camera: {fileID: 1548746631}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
 --- !u!1001 &1653025426
 PrefabInstance:
   m_ObjectHideFlags: 0

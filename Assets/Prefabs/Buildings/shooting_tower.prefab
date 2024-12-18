@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7286949074562034800}
   - component: {fileID: 7092899318552155993}
   - component: {fileID: 5990637008461099174}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 1792669031106379001}
   - component: {fileID: 2999712465093822307}
   - component: {fileID: 1798034037533136445}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 9093166777856935789}
   - component: {fileID: -4545512585596918212}
   - component: {fileID: 6812944476745851529}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: shooting_tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,6 +314,9 @@ MonoBehaviour:
   - {fileID: 7663188207185910660}
   - {fileID: 3878538622539364573}
   - {fileID: 7538764142649078423}
+  generationInterval: 1
+  shootingInterval: 3
+  maxDistance: 15
 --- !u!114 &-4545512585596918212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +367,7 @@ GameObject:
   - component: {fileID: 4523776660750631133}
   - component: {fileID: 4260916500743722306}
   - component: {fileID: 8024639099765421024}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +453,7 @@ GameObject:
   - component: {fileID: 5141662492131392557}
   - component: {fileID: 6693421606426518559}
   - component: {fileID: 5721596316984749532}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,6 +540,10 @@ PrefabInstance:
       propertyPath: building
       value: 
       objectReference: {fileID: 9093166777856935789}
+    - target: {fileID: 5753935716629728675, guid: 7191fd778daa34bc1b912942462945e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6000671902006697159, guid: 7191fd778daa34bc1b912942462945e5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -621,6 +628,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Level Display
       objectReference: {fileID: 0}
+    - target: {fileID: 6504090849032171201, guid: 7191fd778daa34bc1b912942462945e5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -646,6 +657,10 @@ PrefabInstance:
     - target: {fileID: 2723695527147327263, guid: 2c36a4872f5934a7f9808004367e56f1, type: 3}
       propertyPath: m_Name
       value: HP Display
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723695527147327263, guid: 2c36a4872f5934a7f9808004367e56f1, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3227116935485816089, guid: 2c36a4872f5934a7f9808004367e56f1, type: 3}
       propertyPath: m_Pivot.x
@@ -726,6 +741,10 @@ PrefabInstance:
     - target: {fileID: 3227116935485816089, guid: 2c36a4872f5934a7f9808004367e56f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3482892746780601469, guid: 2c36a4872f5934a7f9808004367e56f1, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

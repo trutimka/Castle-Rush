@@ -1,12 +1,9 @@
-﻿using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
-public class Mob : MonoBehaviour
+public class Bimba : MonoBehaviour
 {
-    [SerializeField]
-    private int health = 2;
     [SerializeField]
     private int damage = 1;
     [SerializeField]
@@ -16,10 +13,6 @@ public class Mob : MonoBehaviour
     private Player owner;
     private Building target;
     
-    [SerializeField] private float attackCooldown = 1f;
-
-    
-    public int Health => health;
     public int Damage => damage;
     public float Speed => speed;
     public Player Owner => owner;
@@ -37,7 +30,7 @@ public class Mob : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        
+
         if (Target != null)
         {
             InitializeMovement();
@@ -47,11 +40,9 @@ public class Mob : MonoBehaviour
     public void SetOwner(Player newOwner)
     {
         owner = newOwner;
-
-        health += owner.BoostMobHealth;
-        damage += owner.BoostMobDamage;
-        speed += owner.BoostMobSpeed;
-        attackSpeed += owner.BoostMobSpeed;
+        
+        damage += owner.BoostBimbaDamage;
+        speed += owner.BoostBimbaSpeed;
     }
 
     private void InitializeMovement()
@@ -67,40 +58,14 @@ public class Mob : MonoBehaviour
         isRunning = true;
     }
 
-    private IEnumerator InitializeAttacking()
+    private void InitializeAttacking()
     {
+        animator.SetTrigger("Boom");
+        Destroy(gameObject, 0.75f);
         var targetBuilding = (Target.transform.parent == null ? Target : Target.transform.parent.gameObject).GetComponent<Building>();
-        
-        while (targetBuilding != null)
+        if (targetBuilding.Owner != owner)
         {
-            // Запускаем анимацию атаки
-            animator.SetTrigger("Attack");
-
-            // Ждём окончания анимации атаки или сразу наносим урон 
-            // Если хотите подождать событие анимации, можно сделать через Animation Event.
-            yield return new WaitForSeconds(0.1f); // Небольшая задержка, чтобы анимация начала проигрываться
-
-            // Если здание союзное, лечим, иначе наносим урон
-            if (targetBuilding.Owner == owner)
-            {
-                targetBuilding.BuildingHeal(damage);
-            }
-            else
-            {
-                targetBuilding.BuildingHit(damage, owner);
-            }
-
-            // Если задумка, что моб умирает после некоторого числа атак, можно уменьшать здоровье:
-            health -= damage;
-            if (health <= 0)
-            {
-                yield return new WaitForSeconds(0.75f);
-                Destroy(gameObject, 0.25f);
-                yield break; // Прекращаем корутину
-            }
-
-            // Ждём время между атаками
-            yield return new WaitForSeconds(attackCooldown);
+            targetBuilding.BuildingHitWithoutOwner(damage);
         }
     }
     
@@ -117,6 +82,7 @@ public class Mob : MonoBehaviour
                 StopMovement();
             }
         }
+        
     }
     
     private void StopMovement()
@@ -126,10 +92,9 @@ public class Mob : MonoBehaviour
         animator.SetBool("isRunning", false);
 
         // Здесь можно добавить логику взаимодействия с целью
-        Debug.Log("Mob reached the target!");
+        Debug.Log("Kaboooom");
         isRunning = false;
-        StartCoroutine(InitializeAttacking());
-
+        InitializeAttacking();
     }
     
     

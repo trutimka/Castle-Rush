@@ -109,10 +109,25 @@ public abstract class Building : MonoBehaviourPun
             default: Level = 3;OnLevelChanged?.Invoke(Level);break;
         }
     }
+
+    public virtual void BuildingHitWithoutOwner(int damage)
+    {
+        Health -= damage;
+        if (Health <= 0) Health = 0;
+        
+        OnHealthChanged?.Invoke(Health);
+        
+        switch (Health)
+        {
+            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
+            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
+            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
+        }
+    }
     
     protected virtual void GenerateGold()
     {
-        Owner.AddGold(Owner.Boost * CountGoldPerSecond);
+        Owner.AddGold(Owner.Boost * (CountGoldPerSecond + Owner.BoostGoldGeneration));
     }
 
     protected virtual void UpdateMaxHealth(int difference)
