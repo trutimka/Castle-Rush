@@ -186,16 +186,20 @@ public class LineManager : MonoBehaviour
         var targetBuilding = pointB.transform.parent == null ? pointB.transform.gameObject : pointB.transform.parent.gameObject;
         var startBuildingComponent = startBuilding.GetComponent<Building>();
         var targetBuildingComponent = targetBuilding.GetComponent<Building>();
-        
-        var anotherLineManager = targetBuildingComponent.Owner.PlayerCamera.GetComponent<LineManager>();
-        foreach (var player2Line in anotherLineManager.lines)
+
+        if (targetBuildingComponent.Owner != null && targetBuildingComponent.Owner != player)
         {
-            if (player2Line.GetPointA() == pointB && player2Line.GetPointB() == pointA)
+            var anotherLineManager = targetBuildingComponent.Owner.PlayerCamera.GetComponent<LineManager>();
+            foreach (var player2Line in anotherLineManager.lines)
             {
-                anotherLineManager.RemakeRoad(player2Line);
-                break;
+                if (player2Line.GetPointA() == pointB && player2Line.GetPointB() == pointA)
+                {
+                    anotherLineManager.RemakeRoad(player2Line);
+                    break;
+                }
             }
         }
+        
         
         if (roads.ContainsKey(line))
         {
