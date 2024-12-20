@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
@@ -61,7 +62,8 @@ public class Mob : MonoBehaviour
     private void InitializeAttacking()
     {
         animator.SetTrigger("Attack");
-        Destroy(gameObject, 0.75f);
+        PhotonNetwork.Destroy(gameObject);
+        //Destroy(gameObject, 0.75f);
         var targetBuilding = (Target.transform.parent == null ? Target : Target.transform.parent.gameObject).GetComponent<Building>();
         if (targetBuilding.Owner == owner)
         {
