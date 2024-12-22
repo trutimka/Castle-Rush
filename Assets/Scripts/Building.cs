@@ -86,7 +86,7 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
     
     private void Update()
     {
-        if (Owner != Camera.main.GetComponent<Player>()) return;
+        if (Owner == null) return;
         
         timeSinceLastGeneration += Time.unscaledDeltaTime;
 
@@ -158,7 +158,6 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
     
     protected virtual void GenerateGold()
     {
-        if (Owner != Camera.main.GetComponent<Player>()) return;
         Owner.AddGold(Owner.Boost * (CountGoldPerSecond + Owner.BoostGoldGeneration));
     }
 

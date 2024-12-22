@@ -80,7 +80,6 @@ public class Mob : MonoBehaviourPun
             // Ждём окончания анимации атаки или сразу наносим урон 
             // Если хотите подождать событие анимации, можно сделать через Animation Event.
             yield return new WaitForSeconds(0.1f); // Небольшая задержка, чтобы анимация начала проигрываться
-            if (!photonView.IsMine) continue;
             // Если здание союзное, лечим, иначе наносим урон
             if (targetBuilding.Owner == owner)
             {
@@ -107,7 +106,7 @@ public class Mob : MonoBehaviourPun
     
     private void FixedUpdate()
     {
-        if (isRunning && photonView.IsMine)
+        if (isRunning)
         {
             Vector3 move =  movementDirection * Owner.Boost * speed * Time.deltaTime;
             rb.MovePosition(transform.position + move);

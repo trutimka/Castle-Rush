@@ -87,7 +87,7 @@ public class ShootingTower : Building
 
     private IEnumerator ShootPeriodically()
     {
-        while (isShooting && photonView.IsMine)
+        while (isShooting)
         {
             foreach (var target in _roads)
             {
