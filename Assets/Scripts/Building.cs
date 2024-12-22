@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
+using UnityEngine.Serialization;
 
 public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPunInstantiateMagicCallback
 {
@@ -10,17 +11,20 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
     [SerializeField]
     protected float CountGoldPerSecond;
     [SerializeField]
-    protected int Health;
+    protected int health;
     [SerializeField]
     protected int MaxHealth;
     [SerializeField]
-    protected int Level;
+    protected int level;
     public event Action<int> OnLevelChanged;
     public event Action<int> OnHealthChanged;
     public event Action OnOwnerChanged;
     
     public Player Owner => owner;
     
+    public int Health => health;
+    
+    public int Level => level;
     
     [SerializeField]
     protected List<GameObject> spawnPoints;
@@ -35,50 +39,51 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
             // We own this player: send the others our data
             stream.SendNext(manager.GetPlayerNumber(Owner));
             stream.SendNext(CountGoldPerSecond);
-            stream.SendNext(Health);
+            stream.SendNext(health);
             stream.SendNext(MaxHealth);
-            stream.SendNext(Level);
+            stream.SendNext(level);
         }
         else
         {
             // Network player, receive data
             owner = manager.GetPlayer((int)stream.ReceiveNext());
             CountGoldPerSecond = (float)stream.ReceiveNext();
-            Health = (int)stream.ReceiveNext();
+            health = (int)stream.ReceiveNext();
             MaxHealth = (int)stream.ReceiveNext();
-            Level = (int)stream.ReceiveNext();
-            OnHealthChanged?.Invoke(Health);
+            level = (int)stream.ReceiveNext();
+            OnHealthChanged?.Invoke(health);
+            OnOwnerChanged?.Invoke();
         }
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        OnHealthChanged?.Invoke(Health);
-        OnLevelChanged?.Invoke(Level);
+        OnHealthChanged?.Invoke(health);
+        OnLevelChanged?.Invoke(level);
         OnOwnerChanged?.Invoke();
     }
 
     public void Init(int startHealth, int maxHealth, float countGoldPerSecond = 1)
     {
-        Health = startHealth;
+        health = startHealth;
         MaxHealth = maxHealth;
         CountGoldPerSecond = countGoldPerSecond;
         
-        OnHealthChanged?.Invoke(Health);
+        OnHealthChanged?.Invoke(health);
 
-        switch (Health)
+        switch (health)
         {
-            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
-            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
-            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
+            case <= 20: level = 1;OnLevelChanged?.Invoke(level);break;
+            case <= 40: level = 2;OnLevelChanged?.Invoke(level);break;
+            default: level = 3;OnLevelChanged?.Invoke(level);break;
         }
     }
 
     private void Start()
     {
-        OnLevelChanged?.Invoke(Level);
+        OnLevelChanged?.Invoke(level);
         OnOwnerChanged?.Invoke();
-        OnHealthChanged?.Invoke(Health);
+        OnHealthChanged?.Invoke(health);
     }
 
     [SerializeField]
@@ -106,54 +111,54 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
 
     public virtual void BuildingHit(int damage, Player player)
     {
-        if (Health <= 0)
+        if (health <= 0)
         {
-            Health = 1;
+            health = 1;
             ChangePlayer(player);
         }
-        Health -= damage;
-        if (Health <= 0) Health = 0;
+        health -= damage;
+        if (health <= 0) health = 0;
         
-        OnHealthChanged?.Invoke(Health);
+        OnHealthChanged?.Invoke(health);
         
-        switch (Health)
+        switch (health)
         {
-            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
-            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
-            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
+            case <= 20: level = 1;OnLevelChanged?.Invoke(level);break;
+            case <= 40: level = 2;OnLevelChanged?.Invoke(level);break;
+            default: level = 3;OnLevelChanged?.Invoke(level);break;
         }
     }
 
     public virtual void BuildingHeal(int damage)
     {
-        Health += damage;
-        if (Health > MaxHealth)
+        health += damage;
+        if (health > MaxHealth)
         {
-            Health = MaxHealth;
+            health = MaxHealth;
         }
         
-        OnHealthChanged?.Invoke(Health);
+        OnHealthChanged?.Invoke(health);
         
-        switch (Health)
+        switch (health)
         {
-            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
-            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
-            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
+            case <= 20: level = 1;OnLevelChanged?.Invoke(level);break;
+            case <= 40: level = 2;OnLevelChanged?.Invoke(level);break;
+            default: level = 3;OnLevelChanged?.Invoke(level);break;
         }
     }
 
     public virtual void BuildingHitWithoutOwner(int damage)
     {
-        Health -= damage;
-        if (Health <= 0) Health = 0;
+        health -= damage;
+        if (health <= 0) health = 0;
         
-        OnHealthChanged?.Invoke(Health);
+        OnHealthChanged?.Invoke(health);
         
-        switch (Health)
+        switch (health)
         {
-            case <= 20: Level = 1;OnLevelChanged?.Invoke(Level);break;
-            case <= 40: Level = 2;OnLevelChanged?.Invoke(Level);break;
-            default: Level = 3;OnLevelChanged?.Invoke(Level);break;
+            case <= 20: level = 1;OnLevelChanged?.Invoke(level);break;
+            case <= 40: level = 2;OnLevelChanged?.Invoke(level);break;
+            default: level = 3;OnLevelChanged?.Invoke(level);break;
         }
     }
     

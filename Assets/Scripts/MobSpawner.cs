@@ -26,7 +26,7 @@ public class MobSpawner : Building
     public bool AddTarget(GameObject start, GameObject target)
     {
         Debug.Log("Adding " + target.name + " to MobSpawner");
-        if (_roads.Count >= Level) return false;
+        if (_roads.Count >= level) return false;
         if (_roads.FindAll(t => (t.Item1 == start && t.Item2 == target)).Count() != 0) return false;
         _roads.Add(new Tuple<GameObject, GameObject>(start, target));
         Debug.Log(target.name + " is added to MobSpawner");
@@ -63,7 +63,7 @@ public class MobSpawner : Building
     private void UpdateLevel(int level)
     {
         // Debug.Log("Delete target: " + _targets.Last());
-        if (_roads.Count > Level)
+        if (_roads.Count > base.level)
         {
             OnRemoveTarget?.Invoke(_roads.Last().Item1, _roads.Last().Item2);
             var isDeleted = _roads.Remove(_roads.Last());

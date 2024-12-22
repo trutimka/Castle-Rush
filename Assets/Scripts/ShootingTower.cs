@@ -18,7 +18,7 @@ public class ShootingTower : Building
 
     [SerializeField]
     private float maxDistance = 13f;
-    public float MaxDistance => maxDistance * Level;
+    public float MaxDistance => maxDistance * level;
     
     public event Action<GameObject, GameObject> OnRemoveTarget;
 
@@ -31,7 +31,7 @@ public class ShootingTower : Building
     public bool AddTarget(GameObject start, GameObject target)
     {
         Debug.Log("Adding " + target.name + " to ShootingTower");
-        if (_roads.Count >= Level) return false;
+        if (_roads.Count >= level) return false;
         if (_roads.FindAll(t => (t.Item1 == start && t.Item2 == target)).Count() != 0) return false;
         _roads.Add(new Tuple<GameObject, GameObject>(start, target));
         Debug.Log(target.name + " is added to ShootingTower");
@@ -67,7 +67,7 @@ public class ShootingTower : Building
     // Сбрасываем цели, если уровень изменился
     private void UpdateLevel(int level)
     {
-        if (_roads.Count > Level)
+        if (_roads.Count > base.level)
         {
             OnRemoveTarget?.Invoke(_roads.Last().Item1, _roads.Last().Item2);
             var isDeleted = _roads.Remove(_roads.Last());
