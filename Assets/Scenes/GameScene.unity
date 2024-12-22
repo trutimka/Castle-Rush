@@ -2301,11 +2301,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
       propertyPath: owner
       value: 
       objectReference: {fileID: 1405222038}
     - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
       propertyPath: Health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: health
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
@@ -2728,11 +2736,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
       propertyPath: owner
       value: 
       objectReference: {fileID: 1548746634}
     - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
       propertyPath: Health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}
+      propertyPath: health
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3481639315829171042, guid: d1d17ff3d1b294469a836f5c1cc8a7bc, type: 3}

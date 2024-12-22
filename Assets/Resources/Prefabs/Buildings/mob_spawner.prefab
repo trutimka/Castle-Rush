@@ -132,9 +132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   CountGoldPerSecond: 0
-  Health: 0
+  health: 0
   MaxHealth: 0
-  Level: 0
+  level: 0
   spawnPoints:
   - {fileID: 2016434176358220271}
   - {fileID: 8732099073363947400}

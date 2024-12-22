@@ -217,6 +217,7 @@ public class LineManager : MonoBehaviour
 
     private void CreateLineFromSpawner(GameObject obj1)
     {
+        var manager = GameObject.FindGameObjectWithTag("CameraManager").GetComponent<CameraManager>();
         var closestPoints = FindClosestExits(currentLine.GetPointA(), obj1);
         var pointA = closestPoints.Item1;
         var pointB = closestPoints.Item2;
@@ -241,7 +242,7 @@ public class LineManager : MonoBehaviour
             spawner.OnRemoveTarget += RemoveLine;
             lines.Add(currentLine); // Добавляем в список
             
-            var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+            var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
 
             Vector3 position = pointB.transform.position - pointA.transform.position;
             Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -250,7 +251,6 @@ public class LineManager : MonoBehaviour
             gameObjectCube.transform.position = pointA.transform.position + position / 2;
             gameObjectCube.transform.localScale = scale;
             gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-            gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
             roads[currentLine] = gameObjectCube;
 
             // Назначаем roadMask для луча (если еще не назначен)
@@ -289,8 +289,8 @@ public class LineManager : MonoBehaviour
 
             if (isExist)
             {
-                var gameObjectCube1 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
-                var gameObjectCube2 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+                var gameObjectCube1 = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
+                var gameObjectCube2 = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
 
                 Vector3 position = pointB.transform.position - pointA.transform.position;
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -298,13 +298,11 @@ public class LineManager : MonoBehaviour
                 gameObjectCube1.transform.position = pointA.transform.position + position / 4;
                 gameObjectCube1.transform.localScale = scale / 2;
                 gameObjectCube1.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                gameObjectCube1.GetComponent<MeshRenderer>().material = startBuildingComponent.Owner.PlayerMaterial;
                 gameObjectCube1.layer = LayerMask.NameToLayer("Road");
 
                 gameObjectCube2.transform.position = pointA.transform.position + position * 3 / 4;
                 gameObjectCube2.transform.localScale = scale / 2;
                 gameObjectCube2.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                gameObjectCube2.GetComponent<MeshRenderer>().material = targetBuildingComponent.Owner.PlayerMaterial;
                 gameObjectCube2.layer = LayerMask.NameToLayer("Road");
 
                 anotherLineManager.roads[isExistLine] = gameObjectCube2;
@@ -312,7 +310,7 @@ public class LineManager : MonoBehaviour
             }
             else
             {
-                var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+                var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
                 Vector3 position = pointB.transform.position - pointA.transform.position;
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
                 float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
@@ -320,7 +318,6 @@ public class LineManager : MonoBehaviour
                 gameObjectCube.transform.position = pointA.transform.position + position / 2;
                 gameObjectCube.transform.localScale = scale;
                 gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
                 gameObjectCube.layer = LayerMask.NameToLayer("Road");
                 roads[currentLine] = gameObjectCube;
             }
@@ -332,6 +329,7 @@ public class LineManager : MonoBehaviour
 
     private void CreateLineFromShoutingTower(GameObject obj1)
     {
+        var manager = GameObject.FindGameObjectWithTag("CameraManager").GetComponent<CameraManager>();
         var closestPoints = FindClosestExits(currentLine.GetPointA(), obj1);
         var pointA = closestPoints.Item1;
         var pointB = closestPoints.Item2;
@@ -357,7 +355,7 @@ public class LineManager : MonoBehaviour
             tower.OnRemoveTarget += RemoveLine;
             lines.Add(currentLine); // Добавляем в список
             
-            var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+            var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
 
             Vector3 position = (pointB.transform.position - pointA.transform.position);
             Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -366,7 +364,6 @@ public class LineManager : MonoBehaviour
             gameObjectCube.transform.position = pointA.transform.position + position / 2;
             gameObjectCube.transform.localScale = scale;
             gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-            gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
             gameObjectCube.layer = LayerMask.NameToLayer("Road");
             roads[currentLine] = gameObjectCube;
 
@@ -405,8 +402,8 @@ public class LineManager : MonoBehaviour
 
             if (isExist)
             {
-                var gameObjectCube1 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
-                var gameObjectCube2 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+                var gameObjectCube1 = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
+                var gameObjectCube2 = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
 
                 Vector3 position = (pointB.transform.position - pointA.transform.position);
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -415,13 +412,11 @@ public class LineManager : MonoBehaviour
                 gameObjectCube1.transform.position = pointA.transform.position + position / 4;
                 gameObjectCube1.transform.localScale = scale / 2;
                 gameObjectCube1.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                gameObjectCube1.GetComponent<MeshRenderer>().material = startBuildingComponent.Owner.PlayerMaterial;
                 gameObjectCube1.layer = LayerMask.NameToLayer("Road");
             
                 gameObjectCube2.transform.position = pointA.transform.position + position * 3 / 4;
                 gameObjectCube2.transform.localScale = scale / 2;
                 gameObjectCube2.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                gameObjectCube2.GetComponent<MeshRenderer>().material = targetBuildingComponent.Owner.PlayerMaterial;
                 gameObjectCube2.layer = LayerMask.NameToLayer("Road");
 
                 anotherLineManager.roads[isExistLine] = gameObjectCube2;
@@ -429,7 +424,7 @@ public class LineManager : MonoBehaviour
             }
             else
             {
-                var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+                var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
                 Vector3 position = (pointB.transform.position - pointA.transform.position);
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
                 float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
@@ -437,7 +432,6 @@ public class LineManager : MonoBehaviour
                 gameObjectCube.transform.position = pointA.transform.position + position / 2;
                 gameObjectCube.transform.localScale = scale;
                 gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-                gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
                 gameObjectCube.layer = LayerMask.NameToLayer("Road");
                 roads[currentLine] = gameObjectCube;
             }
@@ -500,10 +494,11 @@ public class LineManager : MonoBehaviour
 
     public void RemakeRoad(Line line)
     {
+        var manager = GameObject.FindGameObjectWithTag("CameraManager").GetComponent<CameraManager>();
         Debug.Log("deleting road");
         PhotonNetwork.Destroy(roads[line]);
         
-        var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+        var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/Cube" + manager.GetPlayerNumber(player), Vector3.zero, Quaternion.identity);
         Vector3 position = line.GetPointB().transform.position - line.GetPointA().transform.position;
         Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
         float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
@@ -511,7 +506,6 @@ public class LineManager : MonoBehaviour
         gameObjectCube.transform.position = line.GetPointA().transform.position + position / 2;
         gameObjectCube.transform.localScale = scale;
         gameObjectCube.transform.rotation = Quaternion.Euler(0f, -angle, 0f);
-        gameObjectCube.GetComponent<MeshRenderer>().material = player.PlayerMaterial;
         gameObjectCube.layer = LayerMask.NameToLayer("Road");
         roads[line] = gameObjectCube;
     }
