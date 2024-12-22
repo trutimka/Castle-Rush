@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
 
-public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
+public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPunInstantiateMagicCallback
 {
     [SerializeField]
     protected Player owner = null;
@@ -46,7 +46,15 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
             Health = (int)stream.ReceiveNext();
             MaxHealth = (int)stream.ReceiveNext();
             Level = (int)stream.ReceiveNext();
+            OnHealthChanged?.Invoke(Health);
         }
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        OnHealthChanged?.Invoke(Health);
+        OnLevelChanged?.Invoke(Level);
+        OnOwnerChanged?.Invoke();
     }
 
     public void Init(int startHealth, int maxHealth, float countGoldPerSecond = 1)
@@ -78,7 +86,8 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
     
     private void Update()
     {
-        if (Owner == null) return;
+        if (Owner != Camera.main.GetComponent<Player>()) return;
+        
         timeSinceLastGeneration += Time.unscaledDeltaTime;
 
         if (timeSinceLastGeneration >= generationInterval)
@@ -149,6 +158,7 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable
     
     protected virtual void GenerateGold()
     {
+        if (Owner != Camera.main.GetComponent<Player>()) return;
         Owner.AddGold(Owner.Boost * (CountGoldPerSecond + Owner.BoostGoldGeneration));
     }
 

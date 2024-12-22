@@ -84,7 +84,7 @@ public class MobSpawner : Building
     // Корутин для периодического спавна мобов
     private IEnumerator SpawnMobsPeriodically()
     {
-        while (isSpawning)
+        while (isSpawning && photonView.IsMine)
         {
             foreach (var target in _roads)
             {

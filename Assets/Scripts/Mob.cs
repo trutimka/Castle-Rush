@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
-public class Mob : MonoBehaviour
+public class Mob : MonoBehaviourPun
 {
     [SerializeField]
     private int health = 2;
@@ -80,7 +80,7 @@ public class Mob : MonoBehaviour
             // Ждём окончания анимации атаки или сразу наносим урон 
             // Если хотите подождать событие анимации, можно сделать через Animation Event.
             yield return new WaitForSeconds(0.1f); // Небольшая задержка, чтобы анимация начала проигрываться
-
+            if (!photonView.IsMine) continue;
             // Если здание союзное, лечим, иначе наносим урон
             if (targetBuilding.Owner == owner)
             {
@@ -107,7 +107,7 @@ public class Mob : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (isRunning)
+        if (isRunning && photonView.IsMine)
         {
             Vector3 move =  movementDirection * Owner.Boost * speed * Time.deltaTime;
             rb.MovePosition(transform.position + move);

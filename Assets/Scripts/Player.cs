@@ -69,13 +69,13 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         {
             boost = (float)stream.ReceiveNext();
             boostMultiplier = (double)stream.ReceiveNext();
-            goldCount = (int)stream.ReceiveNext();
+            goldCount = (float)stream.ReceiveNext();
             boostMobDamage = (int)stream.ReceiveNext();
             boostMobSpeed = (int)stream.ReceiveNext();
             boostMobHealth = (int)stream.ReceiveNext();
             boostBimbaDamage = (int)stream.ReceiveNext();
             boostBimbaSpeed = (int)stream.ReceiveNext();
-            boostGoldGeneration = (int)stream.ReceiveNext();
+            boostGoldGeneration = (float)stream.ReceiveNext();
         }
     }
     public bool SpendGold(int amount)
