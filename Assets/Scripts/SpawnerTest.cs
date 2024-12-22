@@ -21,7 +21,10 @@ public class SpawnerTest : MonoBehaviour
         _spawnPlaces = _spawnPointsHolder.GetComponentsInChildren<SpawnPlace>().ToList();
         MarkNeighboursOccupied(_spawnPlaces[1]);
         MarkNeighboursOccupied(_spawnPlaces[_spawnPlaces.Count - 3]);
-        FulfillGameField();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            FulfillGameField();
+        }
     }
 
     private void FulfillGameField()
@@ -48,7 +51,7 @@ public class SpawnerTest : MonoBehaviour
     {
         var randomRotation = GetRandomRotation();
         
-        var building = Instantiate(GetRandomBuilding(), spawnPlace.transform.position, randomRotation);
+        var building = PhotonNetwork.Instantiate("Prefabs/Buildings/" + GetRandomBuilding().name, spawnPlace.transform.position, randomRotation);
         var buildingComponent = building.GetComponent<Building>();
         var maxHealth = 60;
         var startHealth = Random.Range(5, maxHealth + 1);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
@@ -203,7 +204,7 @@ public class LineManager : MonoBehaviour
         
         if (roads.ContainsKey(line))
         {
-            Destroy(roads[line]);
+            PhotonNetwork.Destroy(roads[line]);
             roads.Remove(line);
         }
         if (lines.Contains(line))
@@ -240,7 +241,7 @@ public class LineManager : MonoBehaviour
             spawner.OnRemoveTarget += RemoveLine;
             lines.Add(currentLine); // Добавляем в список
             
-            var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+            var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
 
             Vector3 position = pointB.transform.position - pointA.transform.position;
             Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -270,7 +271,7 @@ public class LineManager : MonoBehaviour
                 {
                     isExist = true;
                     isExistLine = player2Line;
-                    Destroy(anotherLineManager.roads[player2Line]);
+                    PhotonNetwork.Destroy(anotherLineManager.roads[player2Line]);
                     break;
                 }
             }
@@ -288,8 +289,8 @@ public class LineManager : MonoBehaviour
 
             if (isExist)
             {
-                var gameObjectCube1 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
-                var gameObjectCube2 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                var gameObjectCube1 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+                var gameObjectCube2 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
 
                 Vector3 position = pointB.transform.position - pointA.transform.position;
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -311,7 +312,7 @@ public class LineManager : MonoBehaviour
             }
             else
             {
-                var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
                 Vector3 position = pointB.transform.position - pointA.transform.position;
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
                 float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
@@ -356,7 +357,7 @@ public class LineManager : MonoBehaviour
             tower.OnRemoveTarget += RemoveLine;
             lines.Add(currentLine); // Добавляем в список
             
-            var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+            var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
 
             Vector3 position = (pointB.transform.position - pointA.transform.position);
             Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -387,7 +388,7 @@ public class LineManager : MonoBehaviour
                     if (player2Line.transform.position.magnitude > tower.MaxDistance) continue;
                     isExist = true;
                     isExistLine = player2Line;
-                    Destroy(anotherLineManager.roads[player2Line]);
+                    PhotonNetwork.Destroy(anotherLineManager.roads[player2Line]);
                     break;
                 }
             }
@@ -404,8 +405,8 @@ public class LineManager : MonoBehaviour
 
             if (isExist)
             {
-                var gameObjectCube1 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
-                var gameObjectCube2 = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                var gameObjectCube1 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
+                var gameObjectCube2 = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
 
                 Vector3 position = (pointB.transform.position - pointA.transform.position);
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
@@ -428,7 +429,7 @@ public class LineManager : MonoBehaviour
             }
             else
             {
-                var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+                var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
                 Vector3 position = (pointB.transform.position - pointA.transform.position);
                 Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
                 float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;
@@ -490,7 +491,7 @@ public class LineManager : MonoBehaviour
         if (line == null) return;
         if (roads.ContainsKey(line))
         {
-            Destroy(roads[line]);
+            PhotonNetwork.Destroy(roads[line]);
             roads.Remove(line);
         }
         Destroy(line.gameObject);
@@ -500,9 +501,9 @@ public class LineManager : MonoBehaviour
     public void RemakeRoad(Line line)
     {
         Debug.Log("deleting road");
-        Destroy(roads[line]);
+        PhotonNetwork.Destroy(roads[line]);
         
-        var gameObjectCube = Instantiate(cubePrefab, Vector3.zero, Quaternion.identity);
+        var gameObjectCube = PhotonNetwork.Instantiate("Prefabs/Common/" + cubePrefab.name, Vector3.zero, Quaternion.identity);
         Vector3 position = line.GetPointB().transform.position - line.GetPointA().transform.position;
         Vector3 scale = new Vector3(position.magnitude, 0.1f, 1f);
         float angle = Mathf.Atan2(position.z, position.x) * Mathf.Rad2Deg;

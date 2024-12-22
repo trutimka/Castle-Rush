@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -61,7 +62,7 @@ public class Bimba : MonoBehaviour
     private void InitializeAttacking()
     {
         animator.SetTrigger("Boom");
-        Destroy(gameObject, 0.75f);
+        PhotonNetwork.Destroy(gameObject);
         var targetBuilding = (Target.transform.parent == null ? Target : Target.transform.parent.gameObject).GetComponent<Building>();
         if (targetBuilding.Owner != owner)
         {

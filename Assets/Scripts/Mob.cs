@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -95,7 +96,7 @@ public class Mob : MonoBehaviour
             if (health <= 0)
             {
                 yield return new WaitForSeconds(0.75f);
-                Destroy(gameObject, 0.25f);
+                PhotonNetwork.Destroy(gameObject);
                 yield break; // Прекращаем корутину
             }
 

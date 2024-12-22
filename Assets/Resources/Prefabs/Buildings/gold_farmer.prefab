@@ -338,6 +338,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 9151960608129769853}
   - {fileID: 8279514528242177350}
+  generationInterval: 1
+  goldBooster: 2
 --- !u!114 &-4610500184639743415
 MonoBehaviour:
   m_ObjectHideFlags: 0

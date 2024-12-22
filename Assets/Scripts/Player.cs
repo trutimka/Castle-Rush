@@ -1,9 +1,10 @@
 ﻿
 using System;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPunCallbacks, IPunObservable
 {
     protected float boost = 1.0f;
     [SerializeField]
@@ -49,6 +50,34 @@ public class Player : MonoBehaviour
     
     public float Boost => boost;
     public float GoldCount => goldCount;
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(boost);
+            stream.SendNext(boostMultiplier);
+            stream.SendNext(goldCount);
+            stream.SendNext(boostMobDamage);
+            stream.SendNext(boostMobSpeed);
+            stream.SendNext(boostMobHealth);
+            stream.SendNext(boostBimbaDamage);
+            stream.SendNext(boostBimbaSpeed);
+            stream.SendNext(boostGoldGeneration);
+        }
+        else
+        {
+            boost = (float)stream.ReceiveNext();
+            boostMultiplier = (double)stream.ReceiveNext();
+            goldCount = (int)stream.ReceiveNext();
+            boostMobDamage = (int)stream.ReceiveNext();
+            boostMobSpeed = (int)stream.ReceiveNext();
+            boostMobHealth = (int)stream.ReceiveNext();
+            boostBimbaDamage = (int)stream.ReceiveNext();
+            boostBimbaSpeed = (int)stream.ReceiveNext();
+            boostGoldGeneration = (int)stream.ReceiveNext();
+        }
+    }
     public bool SpendGold(int amount)
     {
         if (amount < 0 || goldCount < amount) return false;

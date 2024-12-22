@@ -10809,13 +10809,14 @@ GameObject:
   - component: {fileID: 1405222036}
   - component: {fileID: 1405222038}
   - component: {fileID: 1405222037}
+  - component: {fileID: 1405222039}
   m_Layer: 0
   m_Name: Player1 Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1405222031
 AudioListener:
   m_ObjectHideFlags: 0
@@ -10839,7 +10840,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405222026}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0.71139705, g: 0.76209426, b: 0.9485294, a: 0.019607844}
@@ -10991,6 +10992,29 @@ MonoBehaviour:
   playerColor: {r: 0, g: 0, b: 1, a: 1}
   PlayerNumber: 1
   slowdownInterval: 2
+--- !u!114 &1405222039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405222026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1405222038}
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1411402100
 GameObject:
   m_ObjectHideFlags: 0
@@ -11856,6 +11880,7 @@ GameObject:
   - component: {fileID: 1548746628}
   - component: {fileID: 1548746634}
   - component: {fileID: 1548746633}
+  - component: {fileID: 1548746635}
   m_Layer: 0
   m_Name: Player2 Camera
   m_TagString: MainCamera
@@ -11930,7 +11955,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548746626}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0.71139705, g: 0.76209426, b: 0.9485294, a: 0.019607844}
@@ -12038,6 +12063,29 @@ MonoBehaviour:
   playerColor: {r: 1, g: 0, b: 0, a: 1}
   PlayerNumber: 2
   slowdownInterval: 2
+--- !u!114 &1548746635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548746626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 1548746634}
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &1551457223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14434,6 +14482,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000010640307532, guid: 03326e874cf2548d4946608a4d7ebc94, type: 3}
   m_PrefabInstance: {fileID: 1811552926}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1812619235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1812619236}
+  - component: {fileID: 1812619237}
+  m_Layer: 0
+  m_Name: CameraManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1812619236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812619235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.096058, y: 3.2612734, z: -34.36609}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1812619237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812619235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1594e9eae82f34d40a7fd30fd7d84ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera1: {fileID: 1405222034}
+  camera2: {fileID: 1548746631}
 --- !u!1001 &1816001031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16780,3 +16874,4 @@ SceneRoots:
   - {fileID: 1617758619}
   - {fileID: 7266318715644715675}
   - {fileID: 1648681165}
+  - {fileID: 1812619236}
