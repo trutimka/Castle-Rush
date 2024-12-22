@@ -9,17 +9,12 @@ public class BuildingHPDisplay : MonoBehaviour
     [SerializeField] private TMP_Text _hpText;
     
     [SerializeField] private Camera mainCamera;
-
-    private void Awake()
-    {
-        _building.OnHealthChanged += BuildingOnOnHealthChanged;
-        _building.OnOwnerChanged += BuildingOnOnOwnerChanged;
-        
-        mainCamera = Camera.main;
-    }
     
     private void Start()
     {
+        _building.OnHealthChanged += BuildingOnOnHealthChanged;
+        _building.OnOwnerChanged += BuildingOnOnOwnerChanged;
+        mainCamera = Camera.main;
         transform.LookAt(transform.position + mainCamera.transform.rotation * Vector3.forward,
             mainCamera.transform.rotation * Vector3.up);
     }

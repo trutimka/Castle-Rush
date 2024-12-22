@@ -10,7 +10,7 @@ public class PlayerGoldDisplay : MonoBehaviour
     private Player player;
     private void Awake()
     {
-        mainCamera = Camera.main;
+        //mainCamera = Camera.current;
         player = mainCamera.GetComponent<Player>();
         player.OnGoldChanged += UpdateText;
     }

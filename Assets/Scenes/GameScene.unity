@@ -1522,6 +1522,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1405222035}
     m_Modifications:
+    - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1405222034}
+    - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: cameraManager
+      value: 
+      objectReference: {fileID: 1812619237}
     - target: {fileID: 6000671902006697159, guid: e38296be242e8dc429ae25caa704b556, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1605,6 +1617,10 @@ PrefabInstance:
     - target: {fileID: 6504090849032171201, guid: e38296be242e8dc429ae25caa704b556, type: 3}
       propertyPath: m_Name
       value: Gold Display
+      objectReference: {fileID: 0}
+    - target: {fileID: 6504090849032171201, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12831,6 +12847,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1548746632}
     m_Modifications:
+    - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1548746631}
+    - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: cameraManager
+      value: 
+      objectReference: {fileID: 1812619237}
     - target: {fileID: 6000671902006697159, guid: e38296be242e8dc429ae25caa704b556, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -12914,6 +12942,10 @@ PrefabInstance:
     - target: {fileID: 6504090849032171201, guid: e38296be242e8dc429ae25caa704b556, type: 3}
       propertyPath: m_Name
       value: Gold Display
+      objectReference: {fileID: 0}
+    - target: {fileID: 6504090849032171201, guid: e38296be242e8dc429ae25caa704b556, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16857,10 +16889,12 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 7266318715644715675}
   - {fileID: 91506407}
   - {fileID: 1023463}
   - {fileID: 1405222035}
   - {fileID: 1548746632}
+  - {fileID: 1812619236}
   - {fileID: 1018687126}
   - {fileID: 1125386569}
   - {fileID: 438138287}
@@ -16872,6 +16906,4 @@ SceneRoots:
   - {fileID: 297760355}
   - {fileID: 1798507618}
   - {fileID: 1617758619}
-  - {fileID: 7266318715644715675}
   - {fileID: 1648681165}
-  - {fileID: 1812619236}
