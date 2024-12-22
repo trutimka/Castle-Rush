@@ -29,10 +29,11 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
     
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        var manager = GameObject.FindGameObjectWithTag("CameraManager").GetComponent<CameraManager>();
         if (stream.IsWriting)
         {
             // We own this player: send the others our data
-            //stream.SendNext(owner);
+            stream.SendNext(manager.GetPlayerNumber(Owner));
             stream.SendNext(CountGoldPerSecond);
             stream.SendNext(Health);
             stream.SendNext(MaxHealth);
@@ -41,7 +42,7 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
         else
         {
             // Network player, receive data
-            //owner = stream.ReceiveNext() as Player;
+            owner = manager.GetPlayer((int)stream.ReceiveNext());
             CountGoldPerSecond = (float)stream.ReceiveNext();
             Health = (int)stream.ReceiveNext();
             MaxHealth = (int)stream.ReceiveNext();
