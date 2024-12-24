@@ -41,4 +41,34 @@ public class CameraManager : MonoBehaviour
         if (number == 2) return camera2.GetComponent<Player>();
         return null;
     }
+
+    public void UpgradeMobDamage()
+    {
+        Camera.main.GetComponent<Player>().UpgradeMobDamage();
+    }
+    
+    public void UpgradeMobSpeed()
+    {
+        Camera.main.GetComponent<Player>().UpgradeMobSpeed();
+    }
+
+    public void UpgradeBimbaDamage()
+    {
+        Camera.main.GetComponent<Player>().UpgradeBimbaDamage();
+    }
+
+    public void UpgradeBimbaSpeed()
+    {
+        Camera.main.GetComponent<Player>().UpgradeBimbaSpeed();
+    }
+
+    public void UpgradeMobHealth()
+    {
+        Camera.main.GetComponent<Player>().UpgradeMobHealth();
+    }
+
+    public void UpgradeGoldGeneration()
+    {
+        Camera.main.GetComponent<Player>().UpgradeGoldGeneration();
+    }
 }

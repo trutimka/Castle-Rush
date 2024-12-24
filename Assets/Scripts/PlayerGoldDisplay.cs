@@ -29,6 +29,6 @@ public class PlayerGoldDisplay : MonoBehaviour
 
     private void UpdateText(float gold)
     {
-        goldText.text = $"Gold: {gold:F1}";;
+        goldText.text = $"{gold:F1}";
     }
 }
