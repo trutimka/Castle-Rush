@@ -15890,6 +15890,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Camera: {fileID: 1405222034}
   player2Camera: {fileID: 1548746631}
+  victoryScreen: {fileID: 1921168069}
+  gameOverScreen: {fileID: 308190684}
   player1: {fileID: 0}
   player2: {fileID: 0}
 --- !u!1001 &1653025426

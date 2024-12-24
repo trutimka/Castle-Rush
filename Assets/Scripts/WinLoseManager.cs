@@ -5,6 +5,8 @@ public class WinLoseManager : MonoBehaviour
 {
     [SerializeField] private Camera player1Camera;
     [SerializeField] private Camera player2Camera;
+    [SerializeField] private GameObject victoryScreen;
+    [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private Player player1; 
     [SerializeField] private Player player2;
 
@@ -33,11 +35,13 @@ public class WinLoseManager : MonoBehaviour
         {
             Debug.Log($"Игрок {player1.PlayerNumber} победил! Игрок {player2.PlayerNumber} проиграл.");
             // Вызываем логику победы для player1
+            victoryScreen.SetActive(true);
         }
         else if (!player1HasSpawn && player2HasSpawn)
         {
             Debug.Log($"Игрок {player2.PlayerNumber} победил! Игрок {player1.PlayerNumber} проиграл.");
             // Вызываем логику победы для player2
+            gameOverScreen.SetActive(true);
         }
         else if (!player1HasSpawn && !player2HasSpawn)
         {
