@@ -86,6 +86,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (amount < 0 || goldCount < amount) return false;
         goldCount -= amount;
+        OnGoldChanged?.Invoke(goldCount);
         return true;
     }
 
