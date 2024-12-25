@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     }
     public void Connect()
     {
+        if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         if (!PhotonNetwork.IsConnected)
         {
             Debug.Log("Connecting to photon");

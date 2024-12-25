@@ -35,7 +35,6 @@ public class WinLoseManager : MonoBehaviour
         if (player1HasSpawn && !player2HasSpawn)
         {
             Debug.Log($"Игрок {player1.PlayerNumber} победил! Игрок {player2.PlayerNumber} проиграл.");
-            PhotonNetwork.LeaveRoom();
             // Вызываем логику победы для player1
             if (Camera.main.gameObject.GetComponent<Player>().PlayerNumber == player1.PlayerNumber) victoryScreen.SetActive(true);
             else
@@ -46,7 +45,6 @@ public class WinLoseManager : MonoBehaviour
         else if (!player1HasSpawn && player2HasSpawn)
         {
             Debug.Log($"Игрок {player2.PlayerNumber} победил! Игрок {player1.PlayerNumber} проиграл.");
-            PhotonNetwork.LeaveRoom();
             // Вызываем логику победы для player2
             if (Camera.main.gameObject.GetComponent<Player>().PlayerNumber == player2.PlayerNumber) victoryScreen.SetActive(true);
             else gameOverScreen.SetActive(true);
