@@ -12,11 +12,13 @@ public class CameraManager : MonoBehaviour
         {
             camera1.enabled = true;
             camera1.GetComponentInChildren<PlayerGoldDisplay>().enabled = true;
+            camera2.GetComponentInChildren<LineManager>().enabled = true;
         }
         else
         {
             camera2.enabled = true;
             camera2.GetComponentInChildren<PlayerGoldDisplay>().enabled = true;
+            camera1.GetComponentInChildren<LineManager>().enabled = true;
         }
     }
 

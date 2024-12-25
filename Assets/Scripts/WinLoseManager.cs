@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
 
 public class WinLoseManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class WinLoseManager : MonoBehaviour
     {
         // Находим все здания на сцене
         MobSpawner[] allBuildings = FindObjectsOfType<MobSpawner>();
-
+        
         bool player1HasSpawn = false;
         bool player2HasSpawn = false;
 
@@ -34,14 +35,21 @@ public class WinLoseManager : MonoBehaviour
         if (player1HasSpawn && !player2HasSpawn)
         {
             Debug.Log($"Игрок {player1.PlayerNumber} победил! Игрок {player2.PlayerNumber} проиграл.");
+            PhotonNetwork.LeaveRoom();
             // Вызываем логику победы для player1
-            victoryScreen.SetActive(true);
+            if (Camera.main.gameObject.GetComponent<Player>().PlayerNumber == player1.PlayerNumber) victoryScreen.SetActive(true);
+            else
+            {
+                gameOverScreen.SetActive(true);
+            }
         }
         else if (!player1HasSpawn && player2HasSpawn)
         {
             Debug.Log($"Игрок {player2.PlayerNumber} победил! Игрок {player1.PlayerNumber} проиграл.");
+            PhotonNetwork.LeaveRoom();
             // Вызываем логику победы для player2
-            gameOverScreen.SetActive(true);
+            if (Camera.main.gameObject.GetComponent<Player>().PlayerNumber == player2.PlayerNumber) victoryScreen.SetActive(true);
+            else gameOverScreen.SetActive(true);
         }
         else if (!player1HasSpawn && !player2HasSpawn)
         {
