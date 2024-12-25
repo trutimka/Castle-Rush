@@ -102,6 +102,7 @@ public class MobSpawner : Building
     // Метод для спавна одного моба
     private void SpawnMob(GameObject target)
     {
+        if (Camera.main.GetComponent<Player>() != Owner) return;
         var spawnPoint = SpawnPoints
             .OrderBy(spawnPoint => Vector3.Distance(spawnPoint.transform.position, target.transform.position))
             .FirstOrDefault();

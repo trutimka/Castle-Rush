@@ -178,6 +178,7 @@ public class LineManager : MonoBehaviour
 
     private void RemoveRoad(Line line)
     {
+        Debug.Log("REMOVE ROAD");
         // Аналогично методу RemoveLine, но с конкретной линией
         if (line == null) return;
         

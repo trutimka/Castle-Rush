@@ -71,4 +71,8 @@ public class CameraManager : MonoBehaviour
     {
         Camera.main.GetComponent<Player>().UpgradeGoldGeneration();
     }
+    private void Update()
+    {
+        Camera.main.GetComponent<Player>().BoostUse(Input.GetKeyDown(KeyCode.Space));
+    }
 }

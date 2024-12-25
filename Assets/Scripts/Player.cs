@@ -55,27 +55,31 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(boost);
-            stream.SendNext(boostMultiplier);
-            stream.SendNext(goldCount);
-            stream.SendNext(boostMobDamage);
-            stream.SendNext(boostMobSpeed);
-            stream.SendNext(boostMobHealth);
-            stream.SendNext(boostBimbaDamage);
-            stream.SendNext(boostBimbaSpeed);
-            stream.SendNext(boostGoldGeneration);
+            if (Camera.main.GetComponent<Player>() == this)
+            {
+                stream.SendNext(boost);
+                stream.SendNext(boostMultiplier);
+                stream.SendNext(boostMobDamage);
+                stream.SendNext(boostMobSpeed);
+                stream.SendNext(boostMobHealth);
+                stream.SendNext(boostBimbaDamage);
+                stream.SendNext(boostBimbaSpeed);
+                stream.SendNext(boostGoldGeneration);
+            }
         }
         else
         {
-            boost = (float)stream.ReceiveNext();
-            boostMultiplier = (double)stream.ReceiveNext();
-            goldCount = (float)stream.ReceiveNext();
-            boostMobDamage = (int)stream.ReceiveNext();
-            boostMobSpeed = (int)stream.ReceiveNext();
-            boostMobHealth = (int)stream.ReceiveNext();
-            boostBimbaDamage = (int)stream.ReceiveNext();
-            boostBimbaSpeed = (int)stream.ReceiveNext();
-            boostGoldGeneration = (float)stream.ReceiveNext();
+            if (Camera.main.GetComponent<Player>() != this)
+            {
+                boost = (float)stream.ReceiveNext();
+                boostMultiplier = (double)stream.ReceiveNext();
+                boostMobDamage = (int)stream.ReceiveNext();
+                boostMobSpeed = (int)stream.ReceiveNext();
+                boostMobHealth = (int)stream.ReceiveNext();
+                boostBimbaDamage = (int)stream.ReceiveNext();
+                boostBimbaSpeed = (int)stream.ReceiveNext();
+                boostGoldGeneration = (float)stream.ReceiveNext();
+            }
         }
     }
     public bool SpendGold(int amount)
@@ -98,14 +102,10 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     private float slowdownFactor = 0.9f; // Коэффициент замедления
 
     private float timeSinceLastSlowdown = 0f;
-    
-    private void Update()
+
+    public void BoostUse(bool pressed)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            boost += 0.15f;
-        }
-        
+        if (pressed) boost += 0.15f;
         timeSinceLastSlowdown += Time.unscaledDeltaTime;
 
         if (timeSinceLastSlowdown >= slowdownInterval)
@@ -113,61 +113,35 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
             boost *= slowdownFactor;
             timeSinceLastSlowdown = 0f;
         }
-
-        // if (Input.GetKey(KeyCode.Q))
-        // {
-        //     UpgradeBimbaSpeed();
-        // }
-        // if (Input.GetKey(KeyCode.W))
-        // {
-        //     UpgradeBimbaDamage();
-        // }
-        // if (Input.GetKey(KeyCode.E))
-        // {
-        //     UpgradeMobSpeed();
-        // }
-        // if (Input.GetKey(KeyCode.R))
-        // {
-        //     UpgradeMobHealth();
-        // }
-        // if (Input.GetKey(KeyCode.T))
-        // {
-        //     UpgradeMobDamage();
-        // }
-        //
-        // if (Input.GetKey(KeyCode.Y))
-        // {
-        //     UpgradeGoldGeneration();
-        // }
     }
 
     public void UpgradeMobDamage()
     {
-        boostMobDamage++;
+        if (SpendGold(100*boostMobDamage)) boostMobDamage++;
     }
 
     public void UpgradeMobSpeed()
     {
-        boostMobSpeed++;
+        if (SpendGold(100 * boostMobSpeed)) boostMobSpeed++;
     }
 
     public void UpgradeBimbaDamage()
     {
-        boostBimbaDamage++;
+        if (SpendGold(100 * boostBimbaDamage)) boostBimbaDamage++;
     }
 
     public void UpgradeBimbaSpeed()
     {
-        boostBimbaSpeed++;
+        if (SpendGold(100*boostBimbaSpeed)) boostBimbaSpeed++;
     }
 
     public void UpgradeMobHealth()
     {
-        boostMobHealth++;
+        if (SpendGold(100*boostMobHealth)) boostMobHealth++;
     }
 
     public void UpgradeGoldGeneration()
     {
-        boostGoldGeneration += 0.5f;
+        if (SpendGold((int)(100 * boostGoldGeneration))) boostGoldGeneration += 0.5f;
     }
 }

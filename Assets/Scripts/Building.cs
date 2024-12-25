@@ -105,12 +105,20 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
 
     public virtual void ChangePlayer(Player player)
     {
+        if (!photonView.IsMine)
+        {
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
         owner = player;
         OnOwnerChanged?.Invoke();
     }
 
     public virtual void BuildingHit(int damage, Player player)
     {
+        if (!photonView.IsMine)
+        {
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
         if (health <= 0)
         {
             health = 1;
@@ -131,6 +139,10 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
 
     public virtual void BuildingHeal(int damage)
     {
+        if (!photonView.IsMine)
+        {
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
         health += damage;
         if (health > MaxHealth)
         {
@@ -149,6 +161,10 @@ public abstract class Building : MonoBehaviourPunCallbacks, IPunObservable, IPun
 
     public virtual void BuildingHitWithoutOwner(int damage)
     {
+        if (!photonView.IsMine)
+        {
+            photonView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
         health -= damage;
         if (health <= 0) health = 0;
         

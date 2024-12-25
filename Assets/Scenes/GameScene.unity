@@ -1800,7 +1800,7 @@ PrefabInstance:
       objectReference: {fileID: 2134300828}
     - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5932942591738360086, guid: e38296be242e8dc429ae25caa704b556, type: 3}
       propertyPath: mainCamera
@@ -13033,8 +13033,8 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
+  Synchronization: 1
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1405222038}
@@ -14373,8 +14373,8 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
+  Synchronization: 1
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 1548746634}
