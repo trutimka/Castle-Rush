@@ -29,6 +29,6 @@ public class PlayerGoldDisplay : MonoBehaviour
 
     private void UpdateText(float gold)
     {
-        goldText.text = $"{gold:F1}";
+        if (Camera.main == mainCamera) goldText.text = $"{gold:F1}";
     }
 }
