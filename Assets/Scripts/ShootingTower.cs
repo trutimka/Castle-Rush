@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine;
 
 public class ShootingTower : Building
@@ -110,7 +111,7 @@ public class ShootingTower : Building
 
         if (spawnPoint != null)
         {
-            var bimba = Instantiate(Owner.BimbaPrefab, spawnPoint.transform.position, Quaternion.identity);
+            var bimba = PhotonNetwork.Instantiate("Prefabs/Mobs/" + Owner.BimbaPrefab.name, spawnPoint.transform.position, Quaternion.identity);
             var bimbaComponent = bimba.GetComponent<Bimba>();
             
             if (bimbaComponent != null)
